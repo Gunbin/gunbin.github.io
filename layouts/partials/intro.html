@@ -14,7 +14,7 @@
       <div class="relative group">
         <div class="absolute -inset-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
         <img class="relative rounded-lg shadow-2xl object-cover" 
-             src="{{ $introPhoto | absURL }}" 
+             src="{{ $introPhoto | relURL }}" 
              alt="{{ .Site.Title }}" 
              style="width: 456px; height: 342px;" />
       </div>

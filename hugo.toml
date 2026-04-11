@@ -3,6 +3,7 @@ metaDataFormat = "yaml"
 title = "TrendRadar Insights"
 theme = "blist"
 
+enableRobotsTXT = true
 DefaultContentLanguage = "ko"
 DefaultContentLanguageInSubdir = true
 [languages]
@@ -14,7 +15,7 @@ DefaultContentLanguageInSubdir = true
     [languages.ko.params]
       introTitle = "오늘의 트렌드, 내일의 인사이트"
       introSubtitle = "데이터로 세상을 읽고, 가장 빠른 트렌드를 분석합니다."
-      introPhoto = "/KR_thumb.jpg"
+      introPhoto = "/KR_thumb.png"
       # logo = "/logo.png"
     [[languages.ko.menu.main]]
         name = "Home"
@@ -45,7 +46,7 @@ DefaultContentLanguageInSubdir = true
     [languages.en.params]
       introTitle = "Today's Trends, Tomorrow's Insights"
       introSubtitle = "Reading the world with data and analyzing the fastest trends."
-      introPhoto = "/US_thumb.jpg"
+      introPhoto = "/US_thumb.png"
       # logo = "/logo.png"
     [[languages.en.menu.main]]
         name = "Home"
