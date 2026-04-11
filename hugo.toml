@@ -14,22 +14,23 @@ DefaultContentLanguageInSubdir = true
     [languages.ko.params]
       introTitle = "오늘의 트렌드, 내일의 인사이트"
       introSubtitle = "데이터로 세상을 읽고, 가장 빠른 트렌드를 분석합니다."
+      introPhoto = "/KR_thumb.jpg"
       # logo = "/logo.png"
     [[languages.ko.menu.main]]
         name = "Home"
         url = "/"
         weight = 1
     [[languages.ko.menu.main]]
-        name = "Tech & IT"
-        url = "categories/tech-it/"
+        name = "Tech and IT"
+        url = "categories/tech-and-it/"
         weight = 2
     [[languages.ko.menu.main]]
         name = "Finance"
         url = "categories/finance/"
         weight = 3
     [[languages.ko.menu.main]]
-        name = "Life & Health"
-        url = "categories/life-health/"
+        name = "Life and Health"
+        url = "categories/life-and-health/"
         weight = 4
     [[languages.ko.menu.main]]
         name = "Entertainment"
@@ -44,22 +45,23 @@ DefaultContentLanguageInSubdir = true
     [languages.en.params]
       introTitle = "Today's Trends, Tomorrow's Insights"
       introSubtitle = "Reading the world with data and analyzing the fastest trends."
+      introPhoto = "/US_thumb.jpg"
       # logo = "/logo.png"
     [[languages.en.menu.main]]
         name = "Home"
-        url = "/"
+        url = "/en/"
         weight = 1
     [[languages.en.menu.main]]
-        name = "Tech & IT"
-        url = "categories/tech-it/"
+        name = "Tech and IT"
+        url = "categories/tech-and-it/"
         weight = 2
     [[languages.en.menu.main]]
         name = "Finance"
         url = "categories/finance/"
         weight = 3
     [[languages.en.menu.main]]
-        name = "Life & Health"
-        url = "categories/life-health/"
+        name = "Life and Health"
+        url = "categories/life-and-health/"
         weight = 4
     [[languages.en.menu.main]]
         name = "Entertainment"
@@ -69,7 +71,7 @@ DefaultContentLanguageInSubdir = true
 [params]
   # Enable the darkmode toggle in header
   darkModeToggle = true
-  
+
   # Enable search in header
   enableSearch = true
 
@@ -89,7 +91,7 @@ DefaultContentLanguageInSubdir = true
 
   # Custom copyright - optional
   copyright = "Copyright © 2026 - TrendRadar · All rights reserved"
-  favicon = "/favicon.svg"
+  favicon = "/swirl.png"
 
   # Color for the intro details and social links block, not applicable for dark mode
   # Supported values: Any color from TailwindCSS default colors
@@ -123,88 +125,29 @@ DefaultContentLanguageInSubdir = true
   system = "giscus"
 
   # Options for giscus, exclude hyphens
-  repo = ""
+  repo = "gunbin/gunbin.github.io"
   repoid = ""
-  category = ""
+  category = "Announcements"
   categoryid = ""
-  mapping = ""
-  strict = ""
-  reactionsenabled = ""
-  emitmetadata = ""
-  inputposition = ""
-  theme = ""
-
-  # Options for utterances, exclude hyphens
-  # repo = ""
-  # issueterm = ""
-  # theme = ""
+  mapping = "pathname"
+  strict = "0"
+  reactionsenabled = "1"
+  emitmetadata = "0"
+  inputposition = "top"
+  theme = "preferred_color_scheme"
+  lang = "ko"
 
 [params.homepage.social]
   # Global params common for both languages
-  title = "Follow me"
-  description = "I work on everything coding and tweet developer memes"
+  title = "Connect with TrendRadar"
+  description = "Stay ahead of the curve with real-time trend analysis and deep-dive insights. | 실시간 트렌드 분석과 깊이 있는 인사이트로 세상의 흐름을 먼저 읽으세요."
 
   [[params.homepage.social.icons]]
-    website = "address"
-    url = "John Doe<br/>SomeStreet 20<br/>SomeState"
+    website = "github"
+    url = "https://github.com/gunbin"
   [[params.homepage.social.icons]]
     website = "x"
     url = "https://x.com/"
-  [[params.homepage.social.icons]]
-    website = "linkedin"
-    url = "https://linkedin.com/in/"
-  [[params.homepage.social.icons]]
-    website = "xing"
-    url = "https://www.xing.com/profile/"
-  [[params.homepage.social.icons]]
-    website = "telegram"
-    url = "https://t.me/"
-  [[params.homepage.social.icons]]
-    website = "github"
-    url = "https://github.com/"
-  [[params.homepage.social.icons]]
-    website = "buymeacoffee"
-    url = "https://www.buymeacoffee.com/"
-  [[params.homepage.social.icons]]
-    website = "medium"
-    url = "https://medium.com/"
-  [[params.homepage.social.icons]]
-    website = "reddit"
-    url = "https://reddit.com/"
-  [[params.homepage.social.icons]]
-    website = "dribbble"
-    url = "https://dribbble.com/"
-  [[params.homepage.social.icons]]
-    website = "stackoverflow"
-    url = "https://stackoverflow.com/"
-  [[params.homepage.social.icons]]
-    website = "xda"
-    url = "https://forum.xda-developers.com/"
-  [[params.homepage.social.icons]]
-    website = "tiktok"
-    url = "https://tiktok.com"
-  [[params.homepage.social.icons]]
-    website = "googlescholar"
-    url = "https://scholar.google.com/"
-  [[params.homepage.social.icons]]
-    website = "mastodon"
-    url = "https://joinmastodon.org"
-  [[params.homepage.social.icons]]
-    website = "youtube"
-    url = "https://youtube.com"
-  [[params.homepage.social.icons]]
-    website = "instagram"
-    url = "https://instagram.com"
-  [[params.homepage.social.icons]]
-    website = "facebook"
-    url = "https://facebook.com"
-  [[params.homepage.social.icons]]
-    website = "behance"
-    url = "https://behance.net"
-
-[[menu.main]]
-  name = "About"
-  url = "/about"
 
 [build]
   writeStats = true

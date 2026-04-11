@@ -1,0 +1,24 @@
+<section class="{{ .Site.Params.ascentColor | default "bg-pink-50" }} dark:bg-gray-900">
+  <div class="container max-w-screen-xl mx-auto px-6 py-12 flex flex-col md:flex-row items-center gap-12 lg:gap-20">
+    <div class="flex-[1.5] w-full text-left">
+      <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 break-keep leading-tight text-gray-900 dark:text-white">
+        {{ .Params.introTitle | default .Site.Params.introTitle | safeHTML }}
+      </h1>
+      <p class="font-medium text-lg md:text-xl text-gray-600 dark:text-gray-400 break-keep leading-relaxed">
+        {{ .Params.introSubtitle | default .Site.Params.introSubtitle | safeHTML }}
+      </p>
+    </div>
+    {{ $introPhoto := .Params.introPhoto | default .Site.Params.introPhoto }}
+    {{ if $introPhoto }}
+    <div class="flex-1 w-full flex justify-center md:justify-end">
+      <div class="relative group">
+        <div class="absolute -inset-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
+        <img class="relative rounded-lg shadow-2xl object-cover" 
+             src="{{ $introPhoto | absURL }}" 
+             alt="{{ .Site.Title }}" 
+             style="width: 456px; height: 342px;" />
+      </div>
+    </div>
+    {{ end }}
+  </div>
+</section>
