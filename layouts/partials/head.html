@@ -63,8 +63,8 @@
   {{ partial "twitter_cards.html" . }}
   {{ partial "schema.html" . }}
 
-  {{ if gt (len .Site.Languages) 1}}
-  <meta name="lang" content="{{ .Site.Language }}" />
+  {{ if gt (len .Languages) 1}}
+  <meta name="lang" content="{{ .Language }}" />
   {{ end }}
 
   {{/* Custom JSON-LD for Breadcrumbs and Articles */}}
@@ -102,7 +102,7 @@
     "dateModified": "{{ .Lastmod.Format "2006-01-02T15:04:05Z07:00" }}",
     "author": {
       "@type": "Person",
-      "name": "{{ .Params.author | default .Site.Author.name | default "TrendRadar" }}"
+      "name": "{{ .Params.author | default "TrendRadar" }}"
     },
     "publisher": {
       "@type": "Organization",
