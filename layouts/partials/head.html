@@ -1,0 +1,146 @@
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link rel="icon" href="{{ if (isset .Site.Params "favicon") }}{{ .Site.Params.favicon }}{{ else }}/favicon.ico{{ end }}">
+
+  {{/* Canonical URL */}}
+  <link rel="canonical" href="{{ .Permalink }}">
+
+  {{/* Search Engine Verification */}}
+  {{ with .Site.Params.googleSiteVerification }}<meta name="google-site-verification" content="{{ . }}" />{{ end }}
+  {{ with .Site.Params.naverSiteVerification }}<meta name="naver-site-verification" content="{{ . }}" />{{ end }}
+  {{ with .Site.Params.bingSiteVerification }}<meta name="msvalidate.01" content="{{ . }}" />{{ end }}
+
+  <title>
+  {{ if not .IsHome }}{{ .Title }} - {{ end }}{{ site.Title }}
+  </title>
+  <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{if .IsPage}}{{ .Summary }}{{ else }}{{ with .Site.Params.description }}{{ . }}{{ end }}{{ end }}{{ end -}}" />
+  {{- if .Keywords }}
+  <meta name="keywords" content="{{ delimit .Keywords "," }}" />
+  {{ end -}}
+  {{- if .Params.Author }}
+  <meta name="author" content="{{ .Params.Author}}" />
+  {{ end -}}
+  
+  {{ hugo.Generator }}
+
+  {{/* Styles */}}
+  {{- $styles := resources.Get "css/styles.css" | postCSS (dict "config" "./assets/css/") -}}
+  {{- if hugo.IsServer }}
+  <link rel="stylesheet" href="{{ $styles.RelPermalink }}" />
+  {{ else }}
+  {{- $styles := $styles| minify | fingerprint | resources.PostProcess -}}
+  <link
+    rel="stylesheet"
+    href="{{ $styles.Permalink }}"
+    integrity="{{ $styles.Data.Integrity }}"
+  />
+  {{ end -}}
+
+  {{/* Math/KaTeX */}}
+  {{ $noop := .WordCount }}
+  {{ if .Page.Store.Get "hasMath" }}
+    {{ $katex_css_url := printf "https://cdn.jsdelivr.net/npm/katex@latest/dist/katex%s.css" (cond hugo.IsProduction ".min" "") -}}
+    {{ with try (resources.GetRemote $katex_css_url) -}}
+      {{ with .Err -}}
+        {{ errorf "Could not retrieve KaTeX css file from CDN. Reason: %s." . -}}
+      {{ else with.Value -}}
+        {{ with resources.Copy (printf "css/katex%s.css" (cond hugo.IsProduction ".min" "")) . }}
+          {{ $secureCSS := . | resources.Fingerprint "sha512" -}}
+<link rel="stylesheet" href="{{- .RelPermalink -}}" integrity="{{- $secureCSS.Data.Integrity -}}" crossorigin="anonymous">
+        {{ end -}}
+      {{ end -}}
+    {{ end -}}
+  {{ end }}
+
+  {{ range .AlternativeOutputFormats -}}
+    {{ printf `<link rel="%s" type="%s" href="%s" title="%s" />` .Rel .MediaType.Type .Permalink $.Site.Title | safeHTML }}
+  {{ end -}}
+
+  {{/* SEO Meta Partial Calls */}}
+  {{ partial "opengraph.html" . }}
+  {{ partial "twitter_cards.html" . }}
+  {{ partial "schema.html" . }}
+
+  {{ if gt (len .Site.Languages) 1}}
+  <meta name="lang" content="{{ .Site.Language }}" />
+  {{ end }}
+
+  {{/* Custom JSON-LD for Breadcrumbs and Articles */}}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "{{ .Site.BaseURL }}"
+      }
+      {{ if not .IsHome }}
+      ,{
+        "@type": "ListItem",
+        "position": 2,
+        "name": "{{ .Title }}",
+        "item": "{{ .Permalink }}"
+      }
+      {{ end }}
+    ]
+  }
+  </script>
+
+  {{ if .IsPage }}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "{{ .Title }}",
+    "image": ["{{ .Params.thumbnail | absURL }}"],
+    "datePublished": "{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}",
+    "dateModified": "{{ .Lastmod.Format "2006-01-02T15:04:05Z07:00" }}",
+    "author": {
+      "@type": "Person",
+      "name": "{{ .Params.author | default .Site.Author.name | default "TrendRadar" }}"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "{{ .Site.Title }}",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "{{ .Site.Params.logo | absURL }}"
+      }
+    },
+    "description": "{{ .Description | default .Summary }}"
+  }
+  </script>
+  {{ end }}
+
+  <style>
+    /* Fixed Image Size 992x620 for Body Images and Post Thumbnails */
+    .prose img, 
+    .blog-card img, 
+    article img,
+    .featured-image img {
+      width: 992px !important;
+      max-width: 100% !important;
+      height: auto !important;
+      aspect-ratio: 992 / 620 !important;
+      object-fit: cover !important;
+      border-radius: 0.5rem;
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+      margin-left: auto;
+      margin-right: auto;
+      display: block;
+    }
+    .blog-card img {
+      height: auto !important;
+    }
+    .relative.max-w-5xl img {
+      height: auto !important;
+      aspect-ratio: 992 / 620 !important;
+      object-fit: cover !important;
+    }
+  </style>
+</head>
