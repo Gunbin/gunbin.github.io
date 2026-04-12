@@ -1,11 +1,12 @@
-<section class="{{ .Site.Params.ascentColor | default "bg-pink-50" }} dark:bg-gray-900">
-  <div class="container max-w-screen-xl mx-auto px-6 py-12 flex flex-col md:flex-row items-center gap-12 lg:gap-20">
+<section class="{{ .Site.Params.ascentColor | default "bg-zinc-50" }} dark:bg-zinc-950 border-b border-zinc-200/80 dark:border-zinc-800/80">
+  <div class="container max-w-screen-xl mx-auto px-6 py-12 md:py-16 flex flex-col md:flex-row items-center gap-12 lg:gap-20">
     <div class="flex-[1.5] w-full text-left">
-      <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 break-keep leading-tight text-gray-900 dark:text-white flex items-center gap-4 md:gap-6">
-        <img src="{{ "gradient.png" | relURL }}" class="w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20 object-contain" alt="Trend Icon">
+      <h1 class="flex items-center gap-4 md:gap-6 mb-6 break-keep text-4xl font-extrabold leading-[1.1] tracking-tight text-zinc-900 dark:text-white md:text-5xl lg:text-6xl">
+        <img src="{{ "gradient.png" | relURL }}" class="h-12 w-12 shrink-0 object-contain md:h-16 md:w-16 lg:h-20 lg:h-20" alt="Trend Icon">
         <span>{{ .Params.introTitle | default .Site.Params.introTitle | safeHTML }}</span>
       </h1>
-      <p class="font-medium text-lg md:text-xl text-gray-600 dark:text-gray-400 break-keep leading-relaxed">
+      <div class="mb-4 h-1 w-24 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 md:w-32" aria-hidden="true"></div>
+      <p class="font-medium text-lg md:text-xl text-zinc-600 dark:text-zinc-400 break-keep leading-relaxed">
         {{ .Params.introSubtitle | default .Site.Params.introSubtitle | safeHTML }}
       </p>
     </div>
@@ -13,10 +14,10 @@
     {{ if $introPhoto }}
     <div class="flex-1 w-full flex justify-center md:justify-end">
       <div class="relative group">
-        <div class="absolute -inset-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
-        <img class="relative rounded-lg shadow-2xl object-cover" 
-             src="{{ $introPhoto | relURL }}" 
-             alt="{{ .Site.Title }}" 
+        <div class="absolute -inset-1 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl blur-md opacity-30 group-hover:opacity-50 transition duration-500"></div>
+        <img class="relative rounded-2xl shadow-lg object-cover ring-1 ring-zinc-200/80 dark:ring-zinc-700/80"
+             src="{{ $introPhoto | relURL }}"
+             alt="{{ .Site.Title }}"
              style="width: 456px; height: 342px;" />
       </div>
     </div>

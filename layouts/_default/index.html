@@ -1,0 +1,20 @@
+{{ define "main" }}
+  {{- partial "intro.html" . -}}
+  {{ $frontBundle := .Site.Params.frontBundle | default "blog" }}
+  <div class="container mx-auto grid grid-cols-1 gap-6 p-6 md:grid-cols-2 md:gap-8 lg:grid-cols-3 lg:gap-10">
+    {{ range first 6 (where .Site.RegularPages.ByDate.Reverse "Type" $frontBundle)  }}
+      {{- partial "blog-card.html" . -}}
+    {{ end }}
+  </div>
+
+  {{ if gt (len (where .Site.RegularPages.ByDate.Reverse "Type" $frontBundle)) 6 }}
+  <div class="mb-12 text-center">
+    <a class="inline-flex items-center justify-center rounded-xl border border-zinc-200 bg-white px-8 py-3 text-sm font-semibold text-zinc-700 shadow-sm transition-all hover:-translate-y-0.5 hover:border-transparent hover:bg-gradient-to-r hover:from-blue-600 hover:to-indigo-600 hover:text-white hover:shadow-lg dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:text-white"
+      href="{{ (index (.Site.Menus.main) 0).URL | absLangURL }}" lang="{{ .Lang }}">
+      {{ i18n "morePosts" }}
+    </a>
+  </div>
+  {{ end }}
+
+  {{- partial "social.html" . -}}
+{{ end }}

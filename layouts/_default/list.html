@@ -1,0 +1,15 @@
+{{ define "main" }}
+
+  <h1 class="container mx-auto px-6 pt-8 text-3xl font-extrabold tracking-tight text-zinc-900 dark:text-white md:pt-10 md:text-4xl">{{ .Title }}</h1>
+
+  {{ $paginator := .Paginate .Pages.ByDate.Reverse 6 }}
+  <div class="container mx-auto grid grid-cols-1 gap-6 p-6 md:grid-cols-2 md:gap-8 lg:grid-cols-3 lg:gap-10">
+    {{ range $paginator.Pages }}
+      {{- partial "blog-card.html" . -}}
+    {{ end }}
+  </div>
+
+  {{- partial "paginate.html" . -}}
+
+  {{- partial "social.html" . -}}
+{{ end }}
