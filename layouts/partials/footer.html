@@ -70,6 +70,7 @@
       document.documentElement.classList.add('dark')
       localStorage.setItem('darkmode', 'dark')
     }
+    if (typeof window.syncCusdisTheme === 'function') window.syncCusdisTheme()
   }
   if (darkmode) { darkmode.addEventListener('click', toggleDarkMode); }
   const darkStorage = localStorage.getItem('darkmode');

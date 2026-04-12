@@ -1,0 +1,49 @@
+{{/* Page 컨텍스트 또는 dict "Page" . "heading" "Comments" */}}
+{{ $page := .Page | default . }}
+{{ $heading := .heading | default "댓글" }}
+{{ $appId := or $page.Site.Params.comments.cusdis_app_id $page.Site.Params.comments.cusdisappid }}
+{{ $host := $page.Site.Params.comments.cusdis_host | default "https://cusdis.com" }}
+{{ if $appId }}
+<h2 class="mb-4 text-lg font-bold text-zinc-900 dark:text-zinc-100">{{ $heading }}</h2>
+<div id="cusdis_thread"
+  data-host="{{ $host }}"
+  data-app-id="{{ $appId }}"
+  data-page-id="{{ md5 $page.RelPermalink }}"
+  data-page-url="{{ $page.Permalink }}"
+  data-page-title="{{ $page.Title }}"
+  data-theme="light"
+></div>
+<script>
+(function () {
+  var el = document.getElementById('cusdis_thread');
+  if (!el) return;
+  var darkStorage = localStorage.getItem('darkmode');
+  var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  var useDark = darkStorage === 'dark' || (!darkStorage && prefersDark && darkStorage !== 'light');
+  if (darkStorage === 'light') useDark = false;
+  el.setAttribute('data-theme', useDark ? 'dark' : 'light');
+})();
+</script>
+<script async defer src="{{ $host }}/js/cusdis.es.js"></script>
+<script>
+(function () {
+  function applyCusdisTheme() {
+    if (typeof window.CUSDIS === 'undefined' || typeof window.CUSDIS.setTheme !== 'function') return;
+    var dark = document.documentElement.classList.contains('dark');
+    window.CUSDIS.setTheme(dark ? 'dark' : 'light');
+  }
+  window.syncCusdisTheme = applyCusdisTheme;
+  var tries = 0;
+  var t = setInterval(function () {
+    tries++;
+    if (typeof window.CUSDIS !== 'undefined' && typeof window.CUSDIS.setTheme === 'function') {
+      applyCusdisTheme();
+      clearInterval(t);
+    }
+    if (tries > 200) clearInterval(t);
+  }, 50);
+})();
+</script>
+{{ else }}
+<!-- Cusdis: hugo.toml params.comments.cusdis_app_id -->
+{{ end }}

@@ -1,0 +1,41 @@
+{{ if .Site.Params.comments.system }}
+<div class="not-prose mt-10 border-t border-zinc-200 pt-8 dark:border-zinc-700">
+  {{ if eq .Site.Params.comments.system "mixed" }}
+    {{ if eq .Site.Language.Lang "en" }}
+      {{ partial "comments-cusdis.html" (dict "Page" . "heading" "Comments") }}
+    {{ else }}
+      {{ partial "comments-livere.html" . }}
+    {{ end }}
+  {{ else if eq .Site.Params.comments.system "disqus" }}
+  {{ partial "disqus.html" . }}
+  {{ else if eq .Site.Params.comments.system "giscus" }}
+  <script src="https://giscus.app/client.js"
+    data-repo="{{ .Site.Params.comments.repo }}"
+    data-repo-id="{{ .Site.Params.comments.repoid }}"
+    data-category="{{ .Site.Params.comments.category }}"
+    data-category-id="{{ .Site.Params.comments.categoryid }}"
+    data-mapping="{{ default "pathname" .Site.Params.comments.mapping }}"
+    data-strict="{{ default "0" .Site.Params.comments.strict }}"
+    data-reactions-enabled="{{ default "1" .Site.Params.comments.reactionsenabled }}"
+    data-emit-metadata="{{ default "0" .Site.Params.comments.emitmetadata }}"
+    data-input-position="{{ default "bottom" .Site.Params.comments.inputposition }}"
+    data-theme="{{ default "preferred_color_scheme" .Site.Params.comments.theme }}"
+    data-lang="{{ default "en" $.Site.Language.Lang }}"
+    crossorigin="anonymous"
+    async>
+  </script>
+  {{ else if eq .Site.Params.comments.system "utterances" }}
+  <script src="https://utteranc.es/client.js"
+    repo="{{ .Site.Params.comments.repo }}"
+    issue-term="{{ default "pathname" .Site.Params.comments.issueterm }}"
+    theme="{{ default "preferred_color_scheme" .Site.Params.comments.theme }}"
+    crossorigin="anonymous"
+    async>
+  </script>
+  {{ else if eq .Site.Params.comments.system "cusdis" }}
+  {{ partial "comments-cusdis.html" (dict "Page" . "heading" "댓글") }}
+  {{ else if eq .Site.Params.comments.system "livere" }}
+  {{ partial "comments-livere.html" . }}
+  {{ end }}
+</div>
+{{ end }}

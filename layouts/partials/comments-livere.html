@@ -1,0 +1,20 @@
+{{ $page := .Page | default . }}
+{{ $cid := $page.Site.Params.comments.livere_client_id }}
+{{ if eq $page.Site.Language.Lang "en" }}
+  {{ $cid = or $page.Site.Params.comments.livere_client_id_en $cid }}
+{{ else if eq $page.Site.Language.Lang "ko" }}
+  {{ $cid = or $page.Site.Params.comments.livere_client_id_ko $cid }}
+{{ end }}
+{{ $widget := $page.Site.Params.comments.livere_widget_url | default "https://www.livere.org/livere-widget.js" }}
+{{ if $cid }}
+<h2 class="mb-4 text-lg font-bold text-zinc-900 dark:text-zinc-100">
+  {{- if eq $page.Site.Language.Lang "ko" -}}댓글{{- else -}}Comments{{- end -}}
+</h2>
+<livere-comment
+  client-id="{{ $cid }}"
+  lang="{{ $page.Site.Language.Lang }}"
+></livere-comment>
+<script type="module" src="{{ $widget }}"></script>
+{{ else }}
+<!-- LiveRe: hugo.toml params.comments.livere_client_id -->
+{{ end }}
