@@ -63,8 +63,8 @@
   {{ partial "twitter_cards.html" . }}
   {{ partial "schema.html" . }}
 
-  {{ if gt (len .Languages) 1}}
-  <meta name="lang" content="{{ .Language }}" />
+  {{ if gt (len .Site.Languages) 1}}
+  <meta name="lang" content="{{ .Site.Language }}" />
   {{ end }}
 
   {{/* Custom JSON-LD for Breadcrumbs and Articles */}}
