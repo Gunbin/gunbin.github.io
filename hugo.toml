@@ -81,6 +81,9 @@ DefaultContentLanguageInSubdir = true
   naverSiteVerification = ""
   bingSiteVerification = ""
 
+  # Google AdSense (모든 페이지 <head>에 adsbygoogle.js 로드)
+  googleAdsenseClient = "ca-pub-3365595273165799"
+
   # Enable the darkmode toggle in header
   darkModeToggle = true
 
