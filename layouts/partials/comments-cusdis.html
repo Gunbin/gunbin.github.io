@@ -4,9 +4,24 @@
 {{ $appId := or $page.Site.Params.comments.cusdis_app_id $page.Site.Params.comments.cusdisappid }}
 {{ $host := $page.Site.Params.comments.cusdis_host | default "https://cusdis.com" }}
 {{ if $appId }}
+<style>
+  /* Cusdis: 컨테이너만 정리 (iframe 높이는 위젯→postMessage→부모가 맞춤; overflow 숨김은 잘림만 유발할 수 있어 제외) */
+  #cusdis_thread {
+    width: 100%;
+    min-height: 300px;
+    overflow: visible;
+  }
+  #cusdis_thread iframe {
+    display: block;
+    width: 100% !important;
+    border: 0;
+    vertical-align: top;
+  }
+</style>
 <h2 class="mb-4 text-lg font-bold text-zinc-900 dark:text-zinc-100">{{ $heading }}</h2>
 <div id="cusdis_thread"
   data-host="{{ $host }}"
+  data-iframe="{{ "/js/cusdis-iframe.umd.js" | relURL }}"
   data-app-id="{{ $appId }}"
   data-page-id="{{ md5 $page.RelPermalink }}"
   data-page-url="{{ $page.Permalink }}"
@@ -24,7 +39,105 @@
   el.setAttribute('data-theme', useDark ? 'dark' : 'light');
 })();
 </script>
-<script async defer src="{{ $host }}/js/cusdis.es.js"></script>
+<script>
+(function () {
+  var thread = document.getElementById('cusdis_thread');
+  if (!thread) return;
+  var debounceMs = 120;
+  var minDeltaPx = 4;
+  var padPx = 8;
+  var tid = null;
+  function setIframeHeight(iframe, px, exact) {
+    if (typeof px !== 'number' || !isFinite(px) || px < 80) return;
+    var next = exact ? Math.round(px) : Math.round(px + padPx);
+    var prev = parseFloat(iframe.dataset.cusdisAppliedH);
+    if (isFinite(prev) && Math.abs(next - prev) < minDeltaPx) return;
+    iframe.dataset.cusdisAppliedH = String(next);
+    iframe.style.height = next + 'px';
+    iframe.style.maxHeight = 'none';
+    iframe.style.overflow = 'hidden';
+  }
+  window.addEventListener('message', function (e) {
+    try {
+      if (typeof e.data !== 'string') return;
+      var msg = JSON.parse(e.data);
+      if (msg.from !== 'cusdis' || msg.event !== 'resize') return;
+      var px = msg.data;
+      if (typeof px !== 'number' || !isFinite(px)) return;
+      var iframe = thread.querySelector('iframe');
+      if (iframe) setIframeHeight(iframe, px, true);
+    } catch (_) {}
+  });
+  function measure(iframe) {
+    try {
+      var doc = iframe.contentDocument;
+      if (!doc) return;
+      var html = doc.documentElement;
+      var body = doc.body;
+      if (!html || !body) return;
+      if (!doc.getElementById('cusdis-parent-height-fix')) {
+        var st = doc.createElement('style');
+        st.id = 'cusdis-parent-height-fix';
+        st.textContent = 'html,body{overflow:visible!important;height:auto!important;max-height:none!important}#root{overflow:visible!important;max-height:none!important}';
+        (doc.head || html).appendChild(st);
+      }
+      html.style.overflow = 'visible';
+      body.style.overflow = 'visible';
+      var root = doc.getElementById('root');
+      if (root) {
+        root.style.overflow = 'visible';
+        root.style.maxHeight = 'none';
+      }
+      var h = Math.max(
+        html.scrollHeight,
+        body.scrollHeight,
+        root ? root.scrollHeight : 0
+      );
+      setIframeHeight(iframe, h, false);
+    } catch (_) {}
+  }
+  function debounced(iframe) {
+    if (tid) clearTimeout(tid);
+    tid = setTimeout(function () { measure(iframe); }, debounceMs);
+  }
+  function bind(iframe) {
+    if (iframe.dataset.cusdisHeightBound) return;
+    iframe.dataset.cusdisHeightBound = '1';
+    measure(iframe);
+    iframe.addEventListener('load', function () { measure(iframe); });
+    try {
+      var doc = iframe.contentDocument;
+      if (doc && doc.body) {
+        var mo = new MutationObserver(function () { debounced(iframe); });
+        mo.observe(doc.body, { childList: true, subtree: true });
+        if (typeof ResizeObserver !== 'undefined') {
+          var ro = new ResizeObserver(function () { debounced(iframe); });
+          var root = doc.getElementById('root');
+          if (root) ro.observe(root);
+          else ro.observe(doc.body);
+        }
+      }
+    } catch (_) {}
+    [0, 400, 1200].forEach(function (ms) {
+      setTimeout(function () { measure(iframe); }, ms);
+    });
+  }
+  var obs = new MutationObserver(function () {
+    var iframe = thread.querySelector('iframe');
+    if (iframe) {
+      bind(iframe);
+      obs.disconnect();
+    }
+  });
+  obs.observe(thread, { childList: true, subtree: true });
+  var first = thread.querySelector('iframe');
+  if (first) {
+    bind(first);
+    obs.disconnect();
+  }
+})();
+</script>
+<script defer src="{{ $host }}/js/cusdis.es.js"></script>
 <script>
 (function () {
   function applyCusdisTheme() {
