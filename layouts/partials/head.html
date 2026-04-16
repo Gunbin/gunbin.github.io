@@ -9,6 +9,21 @@
   {{/* Canonical URL */}}
   <link rel="canonical" href="{{ .Permalink }}">
 
+  {{/* hreflang for multi-language (helps crawlers) */}}
+  {{ if gt (len .Sites) 1 }}
+    {{- if and .IsHome (eq .RelPermalink "/") -}}
+      {{- range .Sites -}}
+  <link rel="alternate" hreflang="{{ .Language.Lang }}" href="{{ .Home.Permalink }}">
+      {{- end -}}
+  <link rel="alternate" hreflang="x-default" href="{{ $.Site.BaseURL }}">
+    {{- else if .IsTranslated -}}
+      {{- range .AllTranslations -}}
+  <link rel="alternate" hreflang="{{ .Lang }}" href="{{ .Permalink }}">
+      {{- end -}}
+  <link rel="alternate" hreflang="x-default" href="{{ $.Site.BaseURL }}">
+    {{- end -}}
+  {{ end }}
+
   {{/* Search Engine Verification */}}
   {{ with .Site.Params.googleSiteVerification }}<meta name="google-site-verification" content="{{ . }}" />{{ end }}
   {{ with .Site.Params.naverSiteVerification }}<meta name="naver-site-verification" content="{{ . }}" />{{ end }}

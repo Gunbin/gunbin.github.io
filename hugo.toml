@@ -4,8 +4,10 @@ title = "TrendRadar Insights"
 theme = "blist"
 
 enableRobotsTXT = true
-DefaultContentLanguage = "ko"
-DefaultContentLanguageInSubdir = true
+defaultContentLanguage = "ko"
+defaultContentLanguageInSubdir = true
+disableDefaultLanguageRedirect = true
+disableDefaultSiteRedirect = true
 [languages]
   [languages.ko]
     contentDir = "content/ko" # Korean

@@ -1,0 +1,450 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TrendRadar Insights</title>
+    <meta name="description" content="원하는 언어로 들어가세요. / Choose your language." />
+
+    <link rel="icon" href="/swirl.png" />
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+    <link
+      rel="stylesheet"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
+    />
+
+    <link rel="canonical" href="https://gunbin.github.io/" />
+    <link rel="alternate" hreflang="ko" href="https://gunbin.github.io/ko/" />
+    <link rel="alternate" hreflang="en" href="https://gunbin.github.io/en/" />
+    <link rel="alternate" hreflang="x-default" href="https://gunbin.github.io/" />
+
+    <style>
+      :root {
+        --bg: #fafafa;
+        --panel: rgba(255, 255, 255, 0.75);
+        --card: #ffffff;
+        --text: #18181b;
+        --muted: #52525b;
+        --border: rgba(24, 24, 27, 0.1);
+        --border-strong: rgba(24, 24, 27, 0.14);
+        --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+        --shadow: 0 18px 48px rgba(0, 0, 0, 0.08);
+        --ring: rgba(99, 102, 241, 0.45);
+        --soft: rgba(113, 113, 122, 0.08);
+      }
+      html.dark {
+        --bg: #09090b;
+        --panel: rgba(9, 9, 11, 0.65);
+        --card: #09090b;
+        --text: #fafafa;
+        --muted: #a1a1aa;
+        --border: rgba(244, 244, 245, 0.14);
+        --border-strong: rgba(244, 244, 245, 0.2);
+        --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.35);
+        --shadow: 0 18px 48px rgba(0, 0, 0, 0.55);
+        --ring: rgba(99, 102, 241, 0.55);
+        --soft: rgba(113, 113, 122, 0.12);
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: Pretendard, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple SD Gothic Neo",
+          "Malgun Gothic", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+      }
+      a {
+        color: inherit;
+      }
+      a:focus-visible,
+      button:focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 4px var(--ring);
+        border-radius: 14px;
+      }
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        border-bottom: 1px solid var(--border);
+        background: var(--panel);
+        backdrop-filter: blur(10px);
+      }
+      .topbar-inner {
+        max-width: 1240px;
+        margin: 0 auto;
+        padding: 14px 18px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+      .brandline {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+        color: inherit;
+      }
+      .logo {
+        width: 32px;
+        height: 32px;
+        border-radius: 10px;
+        box-shadow: var(--shadow-sm);
+      }
+      .brandname {
+        font-weight: 900;
+        letter-spacing: -0.02em;
+      }
+      .actions {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .pill {
+        font-size: 12px;
+        font-weight: 800;
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: var(--soft);
+        border: 1px solid var(--border);
+        color: var(--muted);
+        white-space: nowrap;
+      }
+      .iconbtn {
+        width: 38px;
+        height: 38px;
+        display: grid;
+        place-items: center;
+        border-radius: 14px;
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.35);
+        box-shadow: var(--shadow-sm);
+        cursor: pointer;
+        transition: transform 120ms ease, border-color 120ms ease, background 120ms ease;
+      }
+      html.dark .iconbtn {
+        background: rgba(255, 255, 255, 0.06);
+      }
+      .iconbtn:hover {
+        transform: translateY(-1px);
+        border-color: var(--border-strong);
+      }
+      .wrap {
+        max-width: 1240px;
+        margin: 0 auto;
+        padding: 58px 18px 60px;
+      }
+      .hero {
+        text-align: center;
+        max-width: 940px;
+        margin: 0 auto;
+        position: relative;
+        padding: 30px 0 14px;
+      }
+      .hero-bg {
+        position: absolute;
+        inset: -54px -54px auto;
+        height: 320px;
+        pointer-events: none;
+        opacity: 0.8;
+        filter: blur(14px) saturate(1.15);
+        transform: translateZ(0);
+      }
+      html.dark .hero-bg {
+        opacity: 0.72;
+        filter: blur(16px) saturate(1.05);
+      }
+      .hero h1 {
+        margin: 0;
+        font-size: 60px;
+        font-weight: 900;
+        letter-spacing: -0.03em;
+      }
+      .hero p {
+        margin: 12px 0 0;
+        color: var(--muted);
+        line-height: 1.6;
+        font-size: 19px;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 16px;
+        margin-top: 28px;
+      }
+      @media (min-width: 780px) {
+        .grid {
+          grid-template-columns: 1fr 1fr;
+          gap: 24px;
+        }
+      }
+      .card {
+        display: block;
+        text-decoration: none;
+        color: inherit;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 28px 26px;
+        box-shadow: var(--shadow-sm);
+        transition: transform 150ms ease, box-shadow 150ms ease, border-color 150ms ease;
+      }
+      .card:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow);
+        border-color: var(--border-strong);
+      }
+      .top {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 14px;
+      }
+      .label {
+        font-size: 14px;
+        font-weight: 800;
+        color: var(--muted);
+      }
+      .title {
+        margin-top: 4px;
+        font-size: 24px;
+        font-weight: 900;
+        letter-spacing: -0.02em;
+      }
+      .desc {
+        margin-top: 10px;
+        font-size: 15px;
+        color: var(--muted);
+        line-height: 1.6;
+      }
+      .section {
+        margin-top: 18px;
+        padding-top: 14px;
+        border-top: 1px solid rgba(113, 113, 122, 0.22);
+      }
+      html.dark .section {
+        border-top-color: rgba(113, 113, 122, 0.28);
+      }
+      .section-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        margin-bottom: 8px;
+        font-size: 13px;
+        color: var(--muted);
+      }
+      .section-head strong {
+        color: var(--text);
+        font-size: 15px;
+      }
+      .list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        gap: 8px;
+      }
+      .item {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 12px;
+      }
+      .item a {
+        min-width: 0;
+        flex: 1;
+        text-decoration: none;
+        color: var(--muted);
+        border-bottom: 1px dashed rgba(113, 113, 122, 0.55);
+        padding-bottom: 1px;
+      }
+      .card:hover .item a {
+        color: var(--text);
+        border-bottom-color: rgba(113, 113, 122, 0.9);
+      }
+      .date {
+        white-space: nowrap;
+        font-size: 13px;
+        color: var(--muted);
+      }
+      .foot {
+        margin-top: 26px;
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 14px 16px;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.6;
+        background: var(--soft);
+      }
+      .mono {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+        font-size: 12px;
+        color: var(--text);
+      }
+    </style>
+
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem("darkmode");
+          var prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+          if (stored === "dark" || (!stored && prefersDark)) document.documentElement.classList.add("dark");
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="topbar-inner">
+        <a class="brandline" href="/" aria-label="TrendRadar Insights home">
+          <img class="logo" src="/swirl.png" alt="" width="32" height="32" />
+          <span class="brandname">TrendRadar</span>
+        </a>
+        <div class="actions">
+          <span class="pill">Language</span>
+          <button class="iconbtn toggle-dark-mode" type="button" aria-label="Toggle dark mode" title="Toggle theme">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.6"
+              stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+              <line x1="12" y1="5" x2="12" y2="5.01"></line>
+              <line x1="17" y1="7" x2="17" y2="7.01"></line>
+              <line x1="19" y1="12" x2="19" y2="12.01"></line>
+              <line x1="17" y1="17" x2="17" y2="17.01"></line>
+              <line x1="12" y1="19" x2="12" y2="19.01"></line>
+              <line x1="7" y1="17" x2="7" y2="17.01"></line>
+              <line x1="5" y1="12" x2="5" y2="12.01"></line>
+              <line x1="7" y1="7" x2="7" y2="7.01"></line>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <section class="hero" aria-label="Language selection">
+        <img class="hero-bg" src="/gradient.png" alt="" aria-hidden="true" />
+        <h1>TrendRadar Insights</h1>
+        <p>원하는 언어로 들어가세요. / Choose your language.</p>
+      </section>
+
+      <div class="grid" role="list">
+        <a class="card" role="listitem" href="/ko/">
+          <div class="top">
+            <div>
+              <div class="label">한국어</div>
+              <div class="title">TrendRadar Insights (KR)</div>
+              <div class="desc">데이터로 세상을 읽고, 가장 빠른 트렌드를 분석합니다.</div>
+            </div>
+            <div class="pill">/ko/</div>
+          </div>
+          <div class="section" aria-label="최근 글">
+            <div class="section-head">
+              <strong>최근 글</strong>
+              <span>3개</span>
+            </div>
+            <ul class="list" id="recent-ko" aria-live="polite"></ul>
+          </div>
+        </a>
+
+        <a class="card" role="listitem" href="/en/">
+          <div class="top">
+            <div>
+              <div class="label">English</div>
+              <div class="title">TrendRadar Insights (US)</div>
+              <div class="desc">Reading the world with data and analyzing the fastest trends.</div>
+            </div>
+            <div class="pill">/en/</div>
+          </div>
+          <div class="section" aria-label="Latest posts">
+            <div class="section-head">
+              <strong>Latest posts</strong>
+              <span>3</span>
+            </div>
+            <ul class="list" id="recent-en" aria-live="polite"></ul>
+          </div>
+        </a>
+      </div>
+
+      <div class="foot">
+        대표 URL: <span class="mono">https://gunbin.github.io/</span><br />
+      </div>
+    </main>
+
+    <script>
+      (function () {
+        var btn = document.querySelector(".toggle-dark-mode");
+        function toggleDarkMode() {
+          var root = document.documentElement;
+          var isDark = root.classList.contains("dark");
+          if (isDark) {
+            root.classList.remove("dark");
+            try { localStorage.setItem("darkmode", "light"); } catch (e) {}
+          } else {
+            root.classList.add("dark");
+            try { localStorage.setItem("darkmode", "dark"); } catch (e) {}
+          }
+        }
+        if (btn) btn.addEventListener("click", toggleDarkMode);
+      })();
+
+      function formatDate(iso) {
+        if (!iso) return "";
+        try {
+          return iso.slice(0, 10);
+        } catch (e) {
+          return "";
+        }
+      }
+
+      function renderRecent(targetId, items) {
+        var el = document.getElementById(targetId);
+        if (!el) return;
+        if (!items || !items.length) {
+          el.innerHTML = "<li class='item'><span class='date'>-</span><span style='color:var(--muted)'>No posts</span></li>";
+          return;
+        }
+        el.innerHTML = items
+          .slice(0, 3)
+          .map(function (p) {
+            var href = p.permalink || "#";
+            var title = (p.title || "").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+            var date = formatDate(p.date);
+            return (
+              "<li class='item'>" +
+              "<a href='" + href + "' onclick='event.stopPropagation()'>" + title + "</a>" +
+              "<span class='date'>" + date + "</span>" +
+              "</li>"
+            );
+          })
+          .join("");
+      }
+
+      function loadIndexJson(lang, targetId) {
+        return fetch("/" + lang + "/index.json", { cache: "no-store" })
+          .then(function (r) { return r.ok ? r.json() : []; })
+          .then(function (arr) {
+            if (!Array.isArray(arr)) arr = [];
+            arr.sort(function (a, b) {
+              var da = (a.date || "");
+              var db = (b.date || "");
+              return db.localeCompare(da);
+            });
+            renderRecent(targetId, arr);
+          })
+          .catch(function () { renderRecent(targetId, []); });
+      }
+
+      loadIndexJson("ko", "recent-ko");
+      loadIndexJson("en", "recent-en");
+    </script>
+  </body>
+</html>
+
