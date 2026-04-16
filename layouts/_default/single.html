@@ -66,6 +66,27 @@
     {{ end }}
 
     {{ .Content }}
+
+    {{/* 관련 게시글 (Related Posts) */}}
+    {{ $related := .Site.RegularPages.Related . | first 3 }}
+    {{ with $related }}
+    <div class="my-10 rounded-2xl bg-zinc-100 p-6 dark:bg-zinc-800/50">
+      <h3 class="mb-4 text-lg font-bold text-zinc-900 dark:text-zinc-100">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" class="inline-block mr-1 -mt-1"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" /><path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" /></svg>
+        {{ if eq $.Site.Language.Lang "ko" }}관련 포스팅{{ else }}Related Posts{{ end }}
+      </h3>
+      <ul class="flex flex-col space-y-3">
+        {{ range . }}
+        <li>
+          <a href="{{ .RelPermalink }}" class="text-zinc-700 hover:text-blue-600 transition-colors dark:text-zinc-300 dark:hover:text-blue-400">
+            {{ .Title }}
+          </a>
+        </li>
+        {{ end }}
+      </ul>
+    </div>
+    {{ end }}
+
     {{- partial "comments.html" . -}}
   </article>
   </div>
