@@ -79,7 +79,7 @@ disableDefaultSiteRedirect = true
 [params]
   # SEO & Search Engine Verification
   # 발급받은 코드가 있다면 아래 "" 사이에 넣어주세요.
-  googleSiteVerification = ""
+  googleSiteVerification = "4nIMGVUKUloLByg5UDcfI1ygCr_F9LYfENTJdBHLEQg"
   naverSiteVerification = ""
   bingSiteVerification = ""
 
@@ -109,6 +109,8 @@ disableDefaultSiteRedirect = true
   # Custom copyright - optional
   copyright = "Copyright © 2026 - TrendRadar · All rights reserved"
   favicon = "/swirl.png"
+  # JSON-LD publisher.logo, OG/Twitter 폴백(글에 thumbnail 없을 때)
+  logo = "/swirl.png"
 
   # Color for the intro details and social links block, not applicable for dark mode
   # Supported values: Any color from TailwindCSS default colors
@@ -185,14 +187,15 @@ disableDefaultSiteRedirect = true
         inline = [['\(', '\)']]
 
 [related]
-  threshold = 80
+  # v2.4: 태그가 4~8개로 확장됨 → threshold 낮춰 매칭율 증가, tags 가중치를 categories보다 높게
+  threshold = 50
   includeNewer = true
   toLower = false
   [[related.indices]]
-    name = "categories"
+    name = "tags"
     weight = 100
   [[related.indices]]
-    name = "tags"
+    name = "categories"
     weight = 80
   [[related.indices]]
     name = "date"

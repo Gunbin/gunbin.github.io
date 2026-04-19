@@ -1,0 +1,15 @@
+{{- /*
+  v2.4 image render hook
+  - 자동 lazy loading + decoding=async
+  - width/height 명시로 CLS 방지
+  - Cloudinary URL은 f_auto/q_auto/w_992 변환 자동 적용
+*/ -}}
+{{- $url := .Destination -}}
+{{- $alt := .Text -}}
+{{- $title := .Title -}}
+{{- if and $url (in $url "res.cloudinary.com") -}}
+  {{- $optimized := replaceRE "/upload/(?:f_auto[^/]*/|q_auto[^/]*/|w_\\d+[^/]*/)*" "/upload/f_auto,q_auto,w_992/" $url -}}
+  <img src="{{ $optimized | safeURL }}" alt="{{ $alt }}"{{ with $title }} title="{{ . }}"{{ end }} loading="lazy" decoding="async" width="992" height="620" />
+{{- else -}}
+  <img src="{{ $url | safeURL }}" alt="{{ $alt }}"{{ with $title }} title="{{ . }}"{{ end }} loading="lazy" decoding="async" />
+{{- end -}}

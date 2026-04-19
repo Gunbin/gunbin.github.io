@@ -1,0 +1,26 @@
+{{- /*
+  v2.4 FAQ Schema (Schema.org FAQPage)
+  - frontmatter의 faq: [{q, a}, ...] 가 있을 때만 출력
+  - GEO/AIO: 검색 결과 펼침 박스 + AI Overview 발췌율 ↑
+*/ -}}
+{{- with .Params.faq -}}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {{- range $i, $item := . }}
+    {{- if $i }},{{ end }}
+    {
+      "@type": "Question",
+      "name": {{ $item.q | jsonify }},
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": {{ $item.a | jsonify }}
+      }
+    }
+    {{- end }}
+  ]
+}
+</script>
+{{- end -}}

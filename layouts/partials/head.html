@@ -132,12 +132,15 @@
   </script>
 
   {{ if .IsPage }}
+  {{- $postImage := or .Params.thumbnail site.Params.socialImage site.Params.logo site.Params.favicon -}}
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     "headline": "{{ .Title }}",
-    "image": ["{{ .Params.thumbnail | absURL }}"],
+    {{- with $postImage }}
+    "image": ["{{ . | absURL }}"],
+    {{- end }}
     "datePublished": "{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}",
     "dateModified": "{{ .Lastmod.Format "2006-01-02T15:04:05Z07:00" }}",
     "author": {
@@ -149,12 +152,13 @@
       "name": "{{ .Site.Title }}",
       "logo": {
         "@type": "ImageObject",
-        "url": "{{ .Site.Params.logo | absURL }}"
+        "url": "{{ (or site.Params.logo site.Params.favicon) | absURL }}"
       }
     },
     "description": "{{ .Description | default .Summary }}"
   }
   </script>
+  {{ partial "schema-faq.html" . }}
   {{ end }}
 
   <style>

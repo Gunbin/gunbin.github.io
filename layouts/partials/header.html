@@ -1,12 +1,12 @@
 <header class="sticky top-0 z-50 w-full border-b border-zinc-200/70 dark:border-zinc-800/80 backdrop-blur-md bg-white/75 dark:bg-zinc-950/75 supports-[backdrop-filter]:bg-white/65 supports-[backdrop-filter]:dark:bg-zinc-950/65">
   <div class="container flex justify-between md:justify-between gap-4 flex-wrap p-6 mx-auto relative">
     <a href="{{ .Site.Home.Permalink }}" class="capitalize font-extrabold text-2xl tracking-tight flex items-center text-zinc-900 dark:text-white">
-      <img src="{{ "/swirl.png" | absURL }}" alt="Logo" class="h-8 w-8 mr-2" />
-      {{ if .Site.Params.logo }}
-      <img src="{{ .Site.Params.logo }}" alt="{{ .Site.Title }}" class="h-8 max-w-full" />
-      {{ else }}
+      {{- if .Site.Params.logo -}}
+      <img src="{{ .Site.Params.logo | absURL }}" alt="{{ .Site.Title }}" class="h-8 max-w-full mr-2 object-contain shrink-0" />
+      {{- else -}}
+      <img src="{{ "/swirl.png" | absURL }}" alt="Logo" class="h-8 w-8 mr-2 shrink-0" />
+      {{- end -}}
       {{ .Site.Title }}
-      {{ end }}
     </a>
     <button class="mobile-menu-button md:hidden text-zinc-800 dark:text-zinc-200">
       <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">

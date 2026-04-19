@@ -1,0 +1,40 @@
+{{- $pageImages := partial "_funcs/get-page-images" . }}
+{{- $firstResource := index $pageImages 0 }}
+{{- $imgURL := "" }}
+{{- if .Params.thumbnail }}
+  {{- $imgURL = .Params.thumbnail | absURL }}
+{{- else if $firstResource }}
+  {{- $imgURL = $firstResource.Permalink }}
+{{- else if site.Params.socialImage }}
+  {{- $imgURL = site.Params.socialImage | absURL }}
+{{- else if or site.Params.logo site.Params.favicon }}
+  {{- $imgURL = (or site.Params.logo site.Params.favicon) | absURL }}
+{{- end }}
+
+{{- with $imgURL }}
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="{{ . }}">
+{{- else }}
+  <meta name="twitter:card" content="summary">
+{{- end }}
+
+{{- with or .Title site.Title site.Params.title | plainify }}
+  <meta name="twitter:title" content="{{ . }}">
+{{- end }}
+
+{{- with or .Description .Summary site.Params.description | plainify | htmlUnescape }}
+  <meta name="twitter:description" content="{{ trim . "\n\r\t " }}">
+{{- end }}
+
+{{- $twitterSite := "" }}
+{{- with site.Params.social }}
+  {{- if reflect.IsMap . }}
+    {{- with .twitter }}
+      {{- $content := . }}
+      {{- if not (strings.HasPrefix . "@") }}
+        {{- $content = printf "@%v" . }}
+      {{- end }}
+      <meta name="twitter:site" content="{{ $content }}">
+    {{- end }}
+  {{- end }}
+{{- end }}
