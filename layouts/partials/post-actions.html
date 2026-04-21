@@ -1,0 +1,97 @@
+<div class="not-prose my-10 border-t border-zinc-200 pt-6 dark:border-zinc-700" data-post-actions data-post-url="{{ .Permalink }}" data-post-title="{{ .Title }}">
+  <div class="flex flex-wrap items-center justify-center gap-3">
+    <button
+      type="button"
+      class="inline-flex items-center gap-2 rounded-full border border-zinc-300 bg-zinc-100 px-4 py-2 text-sm font-semibold text-zinc-800 transition-colors hover:bg-zinc-200 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-zinc-600 dark:bg-zinc-800 dark:text-zinc-100 dark:hover:bg-zinc-700"
+      data-bookmark-btn
+      aria-pressed="false"
+      aria-label='{{ i18n "postActionSave" }}'
+      data-label-default='{{ i18n "postActionSave" }}'
+      data-label-active='{{ i18n "postActionSaved" }}'
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M17 3a2 2 0 0 1 2 2v15a1 1 0 0 1-1.496.868l-4.512-2.578a2 2 0 0 0-1.984 0l-4.512 2.578A1 1 0 0 1 5 20V5a2 2 0 0 1 2-2z"/>
+      </svg>
+      <span data-bookmark-label>{{ i18n "postActionSave" }}</span>
+    </button>
+
+    <div class="relative">
+      <button
+        type="button"
+        class="inline-flex items-center gap-2 rounded-full border border-zinc-300 bg-zinc-100 px-4 py-2 text-sm font-semibold text-zinc-800 transition-colors hover:bg-zinc-200 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-zinc-600 dark:bg-zinc-800 dark:text-zinc-100 dark:hover:bg-zinc-700"
+        data-share-btn
+        aria-haspopup="dialog"
+        aria-expanded="false"
+        aria-label='{{ i18n "postActionShare" }}'
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="18" cy="5" r="3"/>
+          <circle cx="6" cy="12" r="3"/>
+          <circle cx="18" cy="19" r="3"/>
+          <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+          <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+        </svg>
+        <span>{{ i18n "postActionShare" }}</span>
+      </button>
+
+      <div
+        class="absolute right-0 z-30 mt-2 hidden w-80 rounded-2xl border border-zinc-200 bg-white p-4 shadow-2xl dark:border-zinc-700 dark:bg-zinc-900"
+        data-share-panel
+        role="dialog"
+        aria-modal="false"
+        aria-label='{{ i18n "shareModalTitle" }}'
+      >
+        <div class="mb-4 flex items-center justify-between">
+          <p class="text-sm font-semibold text-zinc-900 dark:text-zinc-100">{{ i18n "shareModalTitle" }}</p>
+          <button type="button" class="rounded-full p-1 text-zinc-500 transition-colors hover:bg-zinc-100 hover:text-zinc-700 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-200" data-share-close-btn aria-label='{{ i18n "shareClose" }}'>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="18" y1="6" x2="6" y2="18"/>
+              <line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          </button>
+        </div>
+
+        <div class="mb-4 grid grid-cols-3 gap-2">
+          <a href="#" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center gap-1 rounded-xl border border-zinc-200 px-2 py-2 text-[11px] font-medium text-zinc-700 transition-colors hover:bg-zinc-100 dark:border-zinc-700 dark:text-zinc-200 dark:hover:bg-zinc-800" data-share-link="x">
+            <span class="grid h-8 w-8 place-items-center rounded-full bg-zinc-100 dark:bg-zinc-800">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M18.901 1.153h3.68l-8.036 9.188L24 22.847h-7.406l-5.8-7.586l-6.639 7.586H.474l8.595-9.823L0 1.153h7.594l5.243 6.932zM17.61 20.645h2.039L6.486 3.24H4.298z"/>
+              </svg>
+            </span>
+            <span>{{ i18n "shareToX" }}</span>
+          </a>
+          <a href="#" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center gap-1 rounded-xl border border-zinc-200 px-2 py-2 text-[11px] font-medium text-zinc-700 transition-colors hover:bg-zinc-100 dark:border-zinc-700 dark:text-zinc-200 dark:hover:bg-zinc-800" data-share-link="facebook">
+            <span class="grid h-8 w-8 place-items-center rounded-full bg-zinc-100 dark:bg-zinc-800">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M13.5 22v-8h2.6l.4-3h-3V9.1c0-.9.3-1.6 1.7-1.6h1.4V4.8c-.2 0-1.1-.1-2.2-.1c-2.2 0-3.8 1.3-3.8 3.9V11H8v3h2.6v8z"/>
+              </svg>
+            </span>
+            <span>{{ i18n "shareToFacebook" }}</span>
+          </a>
+          <a href="#" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center gap-1 rounded-xl border border-zinc-200 px-2 py-2 text-[11px] font-medium text-zinc-700 transition-colors hover:bg-zinc-100 dark:border-zinc-700 dark:text-zinc-200 dark:hover:bg-zinc-800" data-share-link="linkedin">
+            <span class="grid h-8 w-8 place-items-center rounded-full bg-zinc-100 dark:bg-zinc-800">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M6.94 8.5a1.72 1.72 0 1 1 0-3.44a1.72 1.72 0 0 1 0 3.44M5.5 9.94h2.88V19H5.5zm4.55 0h2.76v1.24h.04c.38-.73 1.32-1.5 2.72-1.5c2.9 0 3.43 1.91 3.43 4.4V19h-2.88v-4.2c0-1-.02-2.28-1.39-2.28c-1.4 0-1.61 1.09-1.61 2.21V19h-2.88z"/>
+              </svg>
+            </span>
+            <span>{{ i18n "shareToLinkedIn" }}</span>
+          </a>
+        </div>
+
+        <label class="mb-1 block text-xs font-medium text-zinc-500 dark:text-zinc-400">{{ i18n "shareLinkLabel" }}</label>
+        <div class="flex items-center gap-2">
+          <input
+            type="text"
+            readonly
+            class="w-full rounded-lg border border-zinc-200 bg-zinc-50 px-2.5 py-2 text-xs text-zinc-700 outline-none focus:border-blue-500 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-200"
+            data-share-url-input
+          />
+          <button type="button" class="shrink-0 rounded-lg bg-blue-600 px-3 py-2 text-xs font-semibold text-white transition-colors hover:bg-blue-700 dark:bg-indigo-600 dark:hover:bg-indigo-500" data-copy-link-btn data-copied-label='{{ i18n "shareCopied" }}' data-failed-label='{{ i18n "shareCopyFailed" }}'>
+            {{ i18n "shareCopyLink" }}
+          </button>
+        </div>
+        <p class="mt-2 h-4 text-xs text-zinc-500 dark:text-zinc-400" data-copy-feedback aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</div>

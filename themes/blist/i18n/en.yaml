@@ -84,3 +84,29 @@
 # Related posts
 - id: seeAlso
   translation: "See also"
+
+# Post actions
+- id: postActionSave
+  translation: "Save"
+- id: postActionSaved
+  translation: "Saved"
+- id: postActionShare
+  translation: "Share"
+- id: shareModalTitle
+  translation: "Share this post"
+- id: shareToX
+  translation: "X"
+- id: shareToFacebook
+  translation: "Facebook"
+- id: shareToLinkedIn
+  translation: "LinkedIn"
+- id: shareCopyLink
+  translation: "Copy link"
+- id: shareCopied
+  translation: "Link copied."
+- id: shareCopyFailed
+  translation: "Failed to copy link."
+- id: shareClose
+  translation: "Close"
+- id: shareLinkLabel
+  translation: "Share link"

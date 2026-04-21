@@ -47,3 +47,29 @@
   translation: "검색 결과가 없습니다"
 - id: searchNoResultsDesc
   translation: "다른 검색어를 입력해 보세요"
+
+# Post actions
+- id: postActionSave
+  translation: "저장"
+- id: postActionSaved
+  translation: "저장됨"
+- id: postActionShare
+  translation: "공유"
+- id: shareModalTitle
+  translation: "이 글 공유하기"
+- id: shareToX
+  translation: "X"
+- id: shareToFacebook
+  translation: "Facebook"
+- id: shareToLinkedIn
+  translation: "LinkedIn"
+- id: shareCopyLink
+  translation: "링크 복사"
+- id: shareCopied
+  translation: "링크가 복사되었습니다."
+- id: shareCopyFailed
+  translation: "복사에 실패했습니다."
+- id: shareClose
+  translation: "닫기"
+- id: shareLinkLabel
+  translation: "공유 링크"

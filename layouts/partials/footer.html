@@ -85,4 +85,127 @@
     mobileMenu.classList.toggle('flex');
   }
   if(mobileMenu && mobileMenuButton){ mobileMenuButton.addEventListener('click', toggleMenu) }
+
+  const postActions = document.querySelector('[data-post-actions]');
+  if (postActions) {
+    const bookmarkBtn = postActions.querySelector('[data-bookmark-btn]');
+    const bookmarkLabel = postActions.querySelector('[data-bookmark-label]');
+    const shareBtn = postActions.querySelector('[data-share-btn]');
+    const sharePanel = postActions.querySelector('[data-share-panel]');
+    const shareCloseBtn = postActions.querySelector('[data-share-close-btn]');
+    const shareUrlInput = postActions.querySelector('[data-share-url-input]');
+    const copyBtn = postActions.querySelector('[data-copy-link-btn]');
+    const copyFeedback = postActions.querySelector('[data-copy-feedback]');
+
+    const postUrl = postActions.dataset.postUrl || window.location.href;
+    const postTitle = postActions.dataset.postTitle || document.title;
+    const savedKey = 'savedPosts';
+
+    function readSavedPosts() {
+      try {
+        const parsed = JSON.parse(localStorage.getItem(savedKey) || '[]');
+        return Array.isArray(parsed) ? parsed : [];
+      } catch (err) {
+        return [];
+      }
+    }
+
+    function writeSavedPosts(urls) {
+      localStorage.setItem(savedKey, JSON.stringify(urls));
+    }
+
+    function updateBookmarkState() {
+      if (!bookmarkBtn || !bookmarkLabel) return;
+      const savedPosts = readSavedPosts();
+      const isSaved = savedPosts.includes(postUrl);
+      const defaultLabel = bookmarkBtn.dataset.labelDefault || 'Save';
+      const activeLabel = bookmarkBtn.dataset.labelActive || 'Saved';
+      bookmarkBtn.setAttribute('aria-pressed', isSaved ? 'true' : 'false');
+      bookmarkLabel.textContent = isSaved ? activeLabel : defaultLabel;
+    }
+
+    function closeSharePanel() {
+      if (!shareBtn || !sharePanel) return;
+      sharePanel.classList.add('hidden');
+      shareBtn.setAttribute('aria-expanded', 'false');
+      if (copyFeedback) copyFeedback.textContent = '';
+    }
+
+    function openSharePanel() {
+      if (!shareBtn || !sharePanel) return;
+      sharePanel.classList.remove('hidden');
+      shareBtn.setAttribute('aria-expanded', 'true');
+    }
+
+    function shareUrl(baseUrl) {
+      return baseUrl + '?url=' + encodeURIComponent(postUrl) + '&text=' + encodeURIComponent(postTitle);
+    }
+
+    const shareMap = {
+      x: 'https://twitter.com/intent/tweet',
+      facebook: 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(postUrl),
+      linkedin: 'https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(postUrl)
+    };
+
+    const xLink = postActions.querySelector('[data-share-link="x"]');
+    const fbLink = postActions.querySelector('[data-share-link="facebook"]');
+    const liLink = postActions.querySelector('[data-share-link="linkedin"]');
+    if (xLink) xLink.href = shareUrl(shareMap.x);
+    if (fbLink) fbLink.href = shareMap.facebook;
+    if (liLink) liLink.href = shareMap.linkedin;
+    if (shareUrlInput) shareUrlInput.value = postUrl;
+
+    if (bookmarkBtn) {
+      bookmarkBtn.addEventListener('click', () => {
+        const savedPosts = readSavedPosts();
+        const isSaved = savedPosts.includes(postUrl);
+        const next = isSaved ? savedPosts.filter((url) => url !== postUrl) : savedPosts.concat(postUrl);
+        writeSavedPosts(next);
+        updateBookmarkState();
+      });
+      updateBookmarkState();
+    }
+
+    if (shareBtn && sharePanel) {
+      shareBtn.addEventListener('click', () => {
+        const expanded = shareBtn.getAttribute('aria-expanded') === 'true';
+        if (expanded) {
+          closeSharePanel();
+        } else {
+          openSharePanel();
+        }
+      });
+
+      document.addEventListener('click', (event) => {
+        if (!sharePanel.classList.contains('hidden') && !postActions.contains(event.target)) {
+          closeSharePanel();
+        }
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') closeSharePanel();
+      });
+    }
+
+    if (shareCloseBtn) {
+      shareCloseBtn.addEventListener('click', closeSharePanel);
+    }
+
+    if (shareUrlInput) {
+      shareUrlInput.addEventListener('click', () => shareUrlInput.select());
+    }
+
+    if (copyBtn) {
+      copyBtn.addEventListener('click', async () => {
+        const copiedMsg = copyBtn.dataset.copiedLabel || '{{ i18n "shareCopied" }}';
+        const failedMsg = copyBtn.dataset.failedLabel || '{{ i18n "shareCopyFailed" }}';
+        try {
+          await navigator.clipboard.writeText(postUrl);
+          if (copyFeedback) copyFeedback.textContent = copiedMsg;
+        } catch (err) {
+          if (copyFeedback) copyFeedback.textContent = failedMsg;
+        }
+      });
+    }
+  }
 </script>

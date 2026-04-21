@@ -67,6 +67,8 @@
 
     {{ .Content }}
 
+    {{- partial "post-actions.html" . -}}
+
     {{/* 관련 게시글 (Related Posts) */}}
     {{ $related := .Site.RegularPages.Related . | first 3 }}
     {{ with $related }}
