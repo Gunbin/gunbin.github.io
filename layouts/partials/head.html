@@ -75,6 +75,231 @@
     /* Pretendard over theme Inter (bundled in main CSS) */
     body {
       font-family: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* 16: Dark mode transition */
+    body,
+    .prose,
+    article,
+    header,
+    footer {
+      transition: background-color 0.25s ease, color 0.25s ease;
+    }
+
+    /* Micro typography tuning for better readability */
+    .prose {
+      color: #374151;
+      line-height: 1.72;
+      letter-spacing: -0.012em;
+    }
+    .dark .prose {
+      color: #d1d5db;
+    }
+    .prose p,
+    .prose li {
+      line-height: 1.72;
+      letter-spacing: -0.012em;
+    }
+    .prose h1,
+    .prose h2 {
+      font-weight: 800;
+      letter-spacing: -0.025em;
+    }
+    .prose h3,
+    .prose h4 {
+      font-weight: 700;
+      letter-spacing: -0.015em;
+    }
+
+    /* 12: Text selection color (amber tone) */
+    ::selection {
+      background: #fde68a;
+      color: #78350f;
+    }
+    .dark ::selection {
+      background: rgba(251, 191, 36, 0.4);
+      color: #fef3c7;
+    }
+
+    /* 2: Scroll progress bar */
+    #read-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 4px;
+      width: 0%;
+      background: linear-gradient(to right, #f59e0b, #d97706);
+      box-shadow: 0 1px 3px rgba(217, 119, 6, 0.35);
+      z-index: 9999;
+      transition: width 0.1s ease-out;
+      pointer-events: none;
+    }
+
+    /* 3: Article link underline animation (scoped to article text) */
+    .prose p a,
+    .prose li a,
+    .prose h1 a,
+    .prose h2 a,
+    .prose h3 a,
+    .prose h4 a {
+      text-decoration: none;
+      background-image: linear-gradient(currentColor, currentColor);
+      background-size: 0% 1px;
+      background-repeat: no-repeat;
+      background-position: 0 92%;
+      transition: background-size 0.3s ease;
+      padding-bottom: 1px;
+    }
+    .prose p a:hover,
+    .prose li a:hover,
+    .prose h1 a:hover,
+    .prose h2 a:hover,
+    .prose h3 a:hover,
+    .prose h4 a:hover {
+      background-size: 100% 1px;
+    }
+
+    /* 4: <mark> highlighter (amber tone, matches callout) */
+    .prose mark,
+    mark {
+      background: linear-gradient(180deg, transparent 55%, #fde68a 55%);
+      color: inherit;
+      padding: 0 0.1em;
+      border-radius: 2px;
+    }
+    .dark .prose mark,
+    .dark mark {
+      background: linear-gradient(180deg, transparent 55%, rgba(251, 191, 36, 0.55) 55%);
+    }
+
+    /* 7: <hr> dotted ornament */
+    .prose hr {
+      border: none;
+      text-align: center;
+      margin: 2.5rem 0;
+      height: 1rem;
+      line-height: 1;
+    }
+    .prose hr::before {
+      content: "• • •";
+      color: #9ca3af;
+      letter-spacing: 0.5em;
+      font-size: 1rem;
+    }
+    .dark .prose hr::before {
+      color: #6b7280;
+    }
+
+    /* 11: <kbd> keycap style */
+    .prose kbd,
+    kbd {
+      display: inline-block;
+      padding: 0.15em 0.45em;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.85em;
+      line-height: 1;
+      color: #111827;
+      background: #f9fafb;
+      border: 1px solid #d1d5db;
+      border-bottom-width: 2px;
+      border-radius: 4px;
+      box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05);
+      vertical-align: middle;
+    }
+    .dark .prose kbd,
+    .dark kbd {
+      color: #f3f4f6;
+      background: #1f2937;
+      border-color: #374151;
+    }
+
+    /* 13: List bullet color accent */
+    .prose ul > li::marker,
+    .prose ol > li::marker {
+      color: #d97706;
+    }
+    .prose ul > li::before {
+      background-color: #d97706 !important;
+    }
+    .dark .prose ul > li::marker,
+    .dark .prose ol > li::marker {
+      color: #fbbf24;
+    }
+    .dark .prose ul > li::before {
+      background-color: #fbbf24 !important;
+    }
+
+    /* 6: Code block Mac window style */
+    .prose pre {
+      position: relative;
+      padding-top: 2.5rem !important;
+      border-radius: 10px;
+    }
+    .prose pre::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1.75rem;
+      background: #2d2d2d;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .prose pre::after {
+      content: "";
+      position: absolute;
+      top: 0.6rem;
+      left: 0.85rem;
+      width: 0.7rem;
+      height: 0.7rem;
+      border-radius: 50%;
+      background: #ff5f56;
+      box-shadow: 1.1rem 0 0 #ffbd2e, 2.2rem 0 0 #27c93f;
+    }
+
+    /* 15: Updated badge (shown when Lastmod differs from Date, within 30 days) */
+    .updated-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.1rem 0.55rem;
+      margin-left: 0.35rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: #065f46;
+      background: #d1fae5;
+      border-radius: 9999px;
+      line-height: 1.4;
+      vertical-align: middle;
+      letter-spacing: 0;
+    }
+    .dark .updated-badge {
+      color: #a7f3d0;
+      background: rgba(16, 185, 129, 0.18);
+    }
+
+    /* Yellow callout tone for blockquote */
+    .prose blockquote {
+      margin: 1.25rem 0;
+      padding: 1rem 1.125rem;
+      border-left: 4px solid #f59e0b;
+      border-radius: 0.5rem;
+      background: #fffbeb;
+      color: #78350f;
+    }
+    .dark .prose blockquote {
+      border-left-color: #fbbf24;
+      background: rgba(245, 158, 11, 0.14);
+      color: #fde68a;
+    }
+    .prose blockquote p:first-child {
+      margin-top: 0;
+    }
+    .prose blockquote p:last-child {
+      margin-bottom: 0;
     }
   </style>
 
@@ -182,5 +407,57 @@
       aspect-ratio: 992 / 620 !important;
       object-fit: cover !important;
     }
+
+    /* 8: Image caption (figure with title attribute) */
+    .prose figure.prose-figure {
+      margin: 1.5rem auto;
+      text-align: center;
+    }
+    .prose figure.prose-figure img {
+      margin: 0 auto;
+    }
+    .prose figure.prose-figure figcaption {
+      margin-top: 0.5rem;
+      text-align: center;
+      font-size: 0.875rem;
+      color: #6b7280;
+      font-style: italic;
+      line-height: 1.5;
+    }
+    .dark .prose figure.prose-figure figcaption {
+      color: #9ca3af;
+    }
   </style>
+
+  {{/* 2: Scroll progress bar — injects a thin amber bar at top of the page */}}
+  <script>
+    (function () {
+      function init() {
+        var bar = document.getElementById('read-progress');
+        if (!bar) {
+          bar = document.createElement('div');
+          bar.id = 'read-progress';
+          if (document.body.firstChild) {
+            document.body.insertBefore(bar, document.body.firstChild);
+          } else {
+            document.body.appendChild(bar);
+          }
+        }
+        function update() {
+          var h = document.documentElement;
+          var max = (h.scrollHeight - h.clientHeight) || 1;
+          var pct = Math.max(0, Math.min(100, (h.scrollTop / max) * 100));
+          bar.style.width = pct + '%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        window.addEventListener('resize', update);
+        update();
+      }
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
+    })();
+  </script>
 </head>

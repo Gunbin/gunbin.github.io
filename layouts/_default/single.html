@@ -29,7 +29,19 @@
       </svg>
       {{ $datestr | i18n "postedOnDate" }}
       {{ if ne $datestr $lastmodstr }}
-        &nbsp{{ $lastmodstr | i18n "lastModified" }}</h5><h5 class="flex flex-wrap items-center text-sm text-zinc-600 dark:text-zinc-400">
+        &nbsp{{ $lastmodstr | i18n "lastModified" }}
+        {{/* 15: Updated badge — Lastmod 이 발행일과 다르고 최근 30일 이내일 때만 표시 */}}
+        {{ $daysAgo := int (div (sub now.Unix .Lastmod.Unix) 86400) }}
+        {{ if and (ge $daysAgo 0) (le $daysAgo 30) }}
+          <span class="updated-badge">
+            {{- if eq .Lang "ko" -}}
+              {{- if eq $daysAgo 0 -}}오늘 업데이트{{- else -}}{{ $daysAgo }}일 전 업데이트{{- end -}}
+            {{- else -}}
+              {{- if eq $daysAgo 0 -}}Updated today{{- else if eq $daysAgo 1 -}}Updated 1 day ago{{- else -}}Updated {{ $daysAgo }} days ago{{- end -}}
+            {{- end -}}
+          </span>
+        {{ end }}
+        </h5><h5 class="flex flex-wrap items-center text-sm text-zinc-600 dark:text-zinc-400">
       {{ else }}
         &nbsp;&bull;&nbsp;
       {{ end }}
