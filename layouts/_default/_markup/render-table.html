@@ -1,0 +1,35 @@
+{{- /*
+  Table render hook — wraps every markdown table with <div class="table-wrap">
+  so horizontal scroll on narrow viewports is handled by the wrapper (not the table itself),
+  preserving the table's natural column distribution.
+*/ -}}
+<div class="table-wrap">
+  <table>
+    <thead>
+      {{- range .THead }}
+      <tr>
+        {{- range . }}
+        <th
+          {{- with .Alignment }} style="text-align: {{ . }}"{{ end -}}
+        >
+          {{- .Text -}}
+        </th>
+        {{- end }}
+      </tr>
+      {{- end }}
+    </thead>
+    <tbody>
+      {{- range .TBody }}
+      <tr>
+        {{- range . }}
+        <td
+          {{- with .Alignment }} style="text-align: {{ . }}"{{ end -}}
+        >
+          {{- .Text -}}
+        </td>
+        {{- end }}
+      </tr>
+      {{- end }}
+    </tbody>
+  </table>
+</div>

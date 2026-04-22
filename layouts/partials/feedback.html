@@ -1,0 +1,114 @@
+{{/* B3: Reader feedback reactions (localStorage-based, no backend) */}}
+<div class="post-feedback not-prose my-10 rounded-2xl border border-zinc-200 bg-white/70 p-6 text-center dark:border-zinc-700 dark:bg-zinc-800/40" data-post-key="{{ .RelPermalink }}">
+  <div class="text-sm font-semibold text-zinc-800 dark:text-zinc-200">
+    {{ if eq .Lang "ko" }}이 글이 도움이 되셨나요?{{ else }}Was this article helpful?{{ end }}
+  </div>
+  <div class="mt-1 text-xs text-zinc-500 dark:text-zinc-400">
+    {{ if eq .Lang "ko" }}가볍게 눌러주시면 큰 힘이 됩니다{{ else }}A quick reaction means a lot{{ end }}
+  </div>
+  <div class="pf-buttons mt-4 flex flex-wrap items-center justify-center gap-2">
+    <button type="button" class="pf-btn" data-reaction="love" aria-label="love">
+      <span class="pf-emoji">😍</span>
+      <span class="pf-label">{{ if eq .Lang "ko" }}완전 최고{{ else }}Awesome{{ end }}</span>
+    </button>
+    <button type="button" class="pf-btn" data-reaction="like" aria-label="like">
+      <span class="pf-emoji">👍</span>
+      <span class="pf-label">{{ if eq .Lang "ko" }}유용해요{{ else }}Useful{{ end }}</span>
+    </button>
+    <button type="button" class="pf-btn" data-reaction="think" aria-label="thinking">
+      <span class="pf-emoji">🤔</span>
+      <span class="pf-label">{{ if eq .Lang "ko" }}더 궁금해요{{ else }}Curious{{ end }}</span>
+    </button>
+  </div>
+  <div class="pf-thanks mt-3 hidden text-xs font-medium text-amber-700 dark:text-amber-400"></div>
+</div>
+
+<style>
+  .post-feedback .pf-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.5rem 0.95rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #374151;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 9999px;
+    cursor: pointer;
+    transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease, color 0.18s ease;
+  }
+  .post-feedback .pf-btn:hover {
+    transform: translateY(-1px);
+    border-color: #f59e0b;
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.15);
+  }
+  .post-feedback .pf-btn.is-active {
+    background: #fef3c7;
+    border-color: #f59e0b;
+    color: #78350f;
+  }
+  .post-feedback .pf-emoji {
+    font-size: 1.15rem;
+    line-height: 1;
+  }
+  .dark .post-feedback .pf-btn {
+    color: #d1d5db;
+    background: rgba(39, 39, 42, 0.6);
+    border-color: #3f3f46;
+  }
+  .dark .post-feedback .pf-btn:hover {
+    border-color: #fbbf24;
+    box-shadow: 0 4px 12px rgba(251, 191, 36, 0.18);
+  }
+  .dark .post-feedback .pf-btn.is-active {
+    background: rgba(245, 158, 11, 0.22);
+    border-color: #fbbf24;
+    color: #fde68a;
+  }
+</style>
+
+<script>
+  (function () {
+    function init() {
+      var boxes = document.querySelectorAll('.post-feedback');
+      if (!boxes.length) return;
+      var lang = document.documentElement.lang || 'en';
+      var isKo = lang.indexOf('ko') === 0;
+      var msg = isKo ? '반응을 남겨주셔서 감사합니다!' : 'Thanks for your reaction!';
+      boxes.forEach(function (box) {
+        if (box.dataset.pfReady) return;
+        box.dataset.pfReady = '1';
+        var key = 'pf:' + (box.getAttribute('data-post-key') || location.pathname);
+        var thanks = box.querySelector('.pf-thanks');
+        var stored = null;
+        try { stored = localStorage.getItem(key); } catch (e) {}
+        if (stored) {
+          var prev = box.querySelector('.pf-btn[data-reaction="' + stored + '"]');
+          if (prev) prev.classList.add('is-active');
+          if (thanks) {
+            thanks.textContent = msg;
+            thanks.classList.remove('hidden');
+          }
+        }
+        box.querySelectorAll('.pf-btn').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            var r = btn.getAttribute('data-reaction');
+            box.querySelectorAll('.pf-btn').forEach(function (b) { b.classList.remove('is-active'); });
+            btn.classList.add('is-active');
+            try { localStorage.setItem(key, r); } catch (e) {}
+            if (thanks) {
+              thanks.textContent = msg;
+              thanks.classList.remove('hidden');
+            }
+          });
+        });
+      });
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+  })();
+</script>

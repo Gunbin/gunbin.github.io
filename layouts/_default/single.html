@@ -18,7 +18,7 @@
 
     <h1 class="mb-3 text-3xl font-extrabold tracking-tight text-zinc-900 dark:text-white md:text-4xl">{{ .Title }}</h1>
     {{ if not (or (or .Site.Params.hideMeta .Params.hideMeta) false) }}
-    <h5 class="flex flex-wrap items-center text-sm text-zinc-600 dark:text-zinc-400">
+    <h5 class="post-meta flex flex-wrap items-center text-sm text-zinc-600 dark:text-zinc-400">
       <svg xmlns="http://www.w3.org/2000/svg" class="mr-1" width="16" height="16" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
         <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
         <rect x="4" y="5" width="16" height="16" rx="2" />
@@ -41,7 +41,7 @@
             {{- end -}}
           </span>
         {{ end }}
-        </h5><h5 class="flex flex-wrap items-center text-sm text-zinc-600 dark:text-zinc-400">
+        </h5><h5 class="post-meta flex flex-wrap items-center text-sm text-zinc-600 dark:text-zinc-400">
       {{ else }}
         &nbsp;&bull;&nbsp;
       {{ end }}
@@ -78,6 +78,8 @@
     {{ end }}
 
     {{ .Content }}
+
+    {{- partial "feedback.html" . -}}
 
     {{- partial "post-actions.html" . -}}
 

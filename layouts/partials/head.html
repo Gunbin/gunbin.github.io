@@ -16,6 +16,11 @@
 
   <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
 
+  {{/* A2: JetBrains Mono — only loaded for metadata accents (Latin-only glyphs, falls back to Pretendard for Korean) */}}
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" />
+
   {{/* Canonical URL */}}
   <link rel="canonical" href="{{ .Permalink }}">
 
@@ -79,6 +84,15 @@
       -moz-osx-font-smoothing: grayscale;
     }
 
+    /* B1: Warm paper-tone background (override theme's cool zinc tone) */
+    body {
+      background-color: #faf8f3 !important;
+    }
+    html.dark body,
+    .dark body {
+      background-color: #0c0a09 !important;
+    }
+
     /* 16: Dark mode transition */
     body,
     .prose,
@@ -111,6 +125,17 @@
     .prose h4 {
       font-weight: 700;
       letter-spacing: -0.015em;
+    }
+
+    /* A2: Monospace accent for article metadata (Latin/digits only; Korean falls back to Pretendard) */
+    .post-meta,
+    .post-meta .updated-badge {
+      font-family: "JetBrains Mono", "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      font-feature-settings: "tnum" 1, "zero" 1;
+    }
+    .post-meta {
+      font-size: 0.78rem;
+      letter-spacing: 0;
     }
 
     /* 12: Text selection color (amber tone) */
@@ -301,6 +326,186 @@
     .prose blockquote p:last-child {
       margin-bottom: 0;
     }
+
+    /* B2: Pull Quote — magazine-style emphasized quote.
+       Authors use:  <p class="pullquote">강조 문구</p>  inside markdown. */
+    .prose .pullquote,
+    .pullquote {
+      position: relative;
+      margin: 2.75rem auto;
+      max-width: 88%;
+      padding: 1.75rem 1.25rem;
+      font-family: Georgia, "Noto Serif KR", serif;
+      font-size: 1.375rem;
+      line-height: 1.7;
+      font-weight: 700;
+      color: #78350f;
+      text-align: center;
+      border-top: 2px solid #f59e0b;
+      border-bottom: 2px solid #f59e0b;
+      background: transparent;
+      font-style: normal;
+    }
+    .prose .pullquote::before {
+      content: "\201C";
+      display: block;
+      margin: -0.6rem auto 0.4rem;
+      font-family: Georgia, serif;
+      font-size: 2.75rem;
+      line-height: 0.6;
+      color: #f59e0b;
+    }
+    .dark .prose .pullquote,
+    .dark .pullquote {
+      color: #fde68a;
+      border-color: #fbbf24;
+    }
+    .dark .prose .pullquote::before {
+      color: #fbbf24;
+    }
+
+    /* Table — 모던 미니멀 (제로 줄무늬, 아주 옅은 헤더 틴트, 얇은 구분선, 호버 앰버)
+       render hook(_markup/render-table.html)이 <div class="table-wrap">로 감쌈 → 스크롤·너비 책임 분리 */
+    .prose .table-wrap {
+      margin: 2rem 0;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      border: 1px solid rgba(245, 158, 11, 0.18);
+      border-radius: 12px;
+      background: #ffffff;
+      box-shadow: 0 1px 2px rgba(17, 24, 39, 0.03);
+    }
+    .prose .table-wrap > table {
+      width: 100%;
+      margin: 0;
+      border-collapse: collapse;
+      border-spacing: 0;
+      font-size: 0.92em;
+      line-height: 1.6;
+      font-variant-numeric: tabular-nums;
+      background: transparent;
+    }
+    .prose .table-wrap thead {
+      background: rgba(245, 158, 11, 0.06);
+      border-bottom: 1px solid rgba(245, 158, 11, 0.35);
+    }
+    .prose .table-wrap thead th {
+      padding: 0.9rem 1.15rem;
+      font-size: 0.82em;
+      font-weight: 700;
+      color: #78350f;
+      text-align: left;
+      letter-spacing: -0.005em;
+      white-space: nowrap;
+    }
+    .prose .table-wrap tbody td {
+      padding: 0.85rem 1.15rem;
+      color: #374151;
+      vertical-align: top;
+      border-top: 1px solid #f4f4f5;
+    }
+    .prose .table-wrap tbody tr:first-child td {
+      border-top: none;
+    }
+    .prose .table-wrap tbody tr {
+      transition: background-color 0.15s ease;
+    }
+    .prose .table-wrap tbody tr:hover {
+      background: rgba(254, 243, 199, 0.45);
+    }
+    .prose .table-wrap tbody td:first-child {
+      font-weight: 600;
+      color: #111827;
+    }
+
+    /* Dark mode */
+    .dark .prose .table-wrap {
+      background: rgba(39, 39, 42, 0.55);
+      border-color: rgba(245, 158, 11, 0.22);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    }
+    .dark .prose .table-wrap thead {
+      background: rgba(245, 158, 11, 0.10);
+      border-bottom-color: rgba(251, 191, 36, 0.4);
+    }
+    .dark .prose .table-wrap thead th {
+      color: #fde68a;
+    }
+    .dark .prose .table-wrap tbody td {
+      color: #d1d5db;
+      border-top-color: rgba(255, 255, 255, 0.05);
+    }
+    .dark .prose .table-wrap tbody tr:hover {
+      background: rgba(245, 158, 11, 0.10);
+    }
+    .dark .prose .table-wrap tbody td:first-child {
+      color: #f3f4f6;
+    }
+
+    /* C2: Code block Copy button (sits inside the Mac top-bar) */
+    .prose pre .copy-btn {
+      position: absolute;
+      top: 0.3rem;
+      right: 0.55rem;
+      z-index: 2;
+      padding: 0.15rem 0.55rem;
+      font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: #d1d5db;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 4px;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.15s ease, background 0.15s ease, color 0.15s ease;
+    }
+    .prose pre:hover .copy-btn,
+    .prose pre .copy-btn:focus-visible {
+      opacity: 1;
+    }
+    .prose pre .copy-btn:hover {
+      background: rgba(255, 255, 255, 0.16);
+      color: #ffffff;
+    }
+    .prose pre .copy-btn.is-copied {
+      color: #a7f3d0;
+      border-color: rgba(167, 243, 208, 0.5);
+    }
+
+    /* C3: Image Lightbox overlay */
+    #img-lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.88);
+      z-index: 10000;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      cursor: zoom-out;
+      opacity: 0;
+      transition: opacity 0.18s ease;
+    }
+    #img-lightbox.is-open {
+      display: flex;
+      opacity: 1;
+    }
+    #img-lightbox img {
+      max-width: 100%;
+      max-height: 100%;
+      border-radius: 8px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
+      transform: scale(0.98);
+      transition: transform 0.22s ease;
+    }
+    #img-lightbox.is-open img {
+      transform: scale(1);
+    }
+    .prose img.lightbox-enabled,
+    article img.lightbox-enabled {
+      cursor: zoom-in;
+    }
   </style>
 
   {{/* Math/KaTeX */}}
@@ -452,6 +657,104 @@
         window.addEventListener('scroll', update, { passive: true });
         window.addEventListener('resize', update);
         update();
+      }
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
+    })();
+  </script>
+
+  {{/* C2: Code block Copy button — injects a Copy button inside each .prose pre */}}
+  <script>
+    (function () {
+      function init() {
+        var label = (document.documentElement.lang || '').indexOf('ko') === 0
+          ? { copy: '복사', done: '복사됨' }
+          : { copy: 'Copy', done: 'Copied' };
+        document.querySelectorAll('.prose pre').forEach(function (pre) {
+          if (pre.dataset.copyReady) return;
+          pre.dataset.copyReady = '1';
+          var btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'copy-btn';
+          btn.setAttribute('aria-label', label.copy);
+          btn.textContent = label.copy;
+          pre.appendChild(btn);
+          btn.addEventListener('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var codeEl = pre.querySelector('code');
+            var text = codeEl ? codeEl.innerText : pre.innerText;
+            text = text.replace(/\s*Copy\s*$/, '').replace(/\s*복사\s*$/, '');
+            function done() {
+              btn.textContent = label.done;
+              btn.classList.add('is-copied');
+              setTimeout(function () {
+                btn.textContent = label.copy;
+                btn.classList.remove('is-copied');
+              }, 1500);
+            }
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(text).then(done, function () {});
+            } else {
+              var ta = document.createElement('textarea');
+              ta.value = text;
+              ta.style.position = 'fixed';
+              ta.style.top = '-9999px';
+              document.body.appendChild(ta);
+              ta.select();
+              try { document.execCommand('copy'); done(); } catch (err) {}
+              document.body.removeChild(ta);
+            }
+          });
+        });
+      }
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
+    })();
+  </script>
+
+  {{/* C3: Image Lightbox — click article images to zoom */}}
+  <script>
+    (function () {
+      function init() {
+        var overlay = document.getElementById('img-lightbox');
+        if (!overlay) {
+          overlay = document.createElement('div');
+          overlay.id = 'img-lightbox';
+          var innerImg = document.createElement('img');
+          innerImg.alt = '';
+          overlay.appendChild(innerImg);
+          document.body.appendChild(overlay);
+        }
+        var imgEl = overlay.querySelector('img');
+        function close() {
+          overlay.classList.remove('is-open');
+          setTimeout(function () { imgEl.src = ''; }, 200);
+          document.body.style.overflow = '';
+        }
+        overlay.addEventListener('click', close);
+        document.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape' && overlay.classList.contains('is-open')) close();
+        });
+        var targets = document.querySelectorAll('.prose img, article img');
+        targets.forEach(function (el) {
+          if (el.dataset.lightboxReady) return;
+          if (el.closest('a')) return;
+          if (el.closest('.post-feedback')) return;
+          el.dataset.lightboxReady = '1';
+          el.classList.add('lightbox-enabled');
+          el.addEventListener('click', function () {
+            imgEl.src = el.currentSrc || el.src;
+            overlay.classList.add('is-open');
+            document.body.style.overflow = 'hidden';
+          });
+        });
       }
       if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', init);
