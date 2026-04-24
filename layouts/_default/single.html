@@ -77,7 +77,9 @@
     {{- partial "toc.html" . -}}
     {{ end }}
 
-    {{ .Content }}
+    <div class="{{ if (or .Site.Params.toc .Params.toc) }}mt-6{{ end }}">
+      {{ .Content }}
+    </div>
 
     {{- partial "feedback.html" . -}}
 
@@ -106,7 +108,9 @@
     </div>
     {{ end }}
 
+    {{ if not .Params.disableComments }}
     {{- partial "comments.html" . -}}
+    {{ end }}
   </article>
   </div>
 

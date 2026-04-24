@@ -1,26 +1,35 @@
 ---
-author: Katheryn Fox
-title: About Me
-date: 2021-07-15
-description:
-keywords: ["about-us", "about-hugo", "contact"]
-type: about
+title: "About TrendRadar"
+date: 2026-04-24
+description: "Learn the mission, scope, and editorial standards of TrendRadar."
+keywords: ["about", "trendradar", "editorial policy", "blog mission"]
+disableComments: true
 ---
 
-Written in Go, Hugo is an open source static site generator available under the [Apache Licence 2.0.](https://github.com/gohugoio/hugo/blob/master/LICENSE) Hugo supports TOML, YAML and JSON data file types, Markdown and HTML content files and uses shortcodes to add rich content. Other notable features are taxonomies, multilingual mode, image processing, custom output formats, HTML/CSS/JS minification and support for Sass SCSS workflows.
+# About TrendRadar
 
-Hugo makes use of a variety of open source projects including:
+TrendRadar is a trend-focused blog that helps readers quickly understand fast-moving topics with data, context, and practical takeaways.
 
-- https://github.com/yuin/goldmark
-- https://github.com/alecthomas/chroma
-- https://github.com/muesli/smartcrop
-- https://github.com/spf13/cobra
-- https://github.com/spf13/viper
+## Our Mission
 
-Hugo is ideal for blogs, corporate websites, creative portfolios, online magazines, single page applications or even a website with thousands of pages.
+- Summarize major shifts across technology, finance, lifestyle, and entertainment
+- Go beyond headlines by explaining background, impact, and useful implications
+- Prioritize clear, verifiable information over hype and speculation
 
-Hugo is for people who want to hand code their own website without worrying about setting up complicated runtimes, dependencies and databases.
+## Topic Coverage
 
-Websites built with Hugo are extremely fast, secure and can be deployed anywhere including, AWS, GitHub Pages, Heroku, Netlify and any other hosting provider.
+- **Tech and IT**: AI, software, platforms, and digital product changes
+- **Finance**: market updates, policy shifts, and personal finance perspectives
+- **Life and Health**: wellness habits, consumer behavior, and daily-life trends
+- **Entertainment**: media, pop culture, and content industry movement
 
-Learn more and contribute on [GitHub](https://github.com/gohugoio).
+## Editorial Standards
+
+1. We prioritize publicly verifiable sources.
+2. We separate facts from interpretation.
+3. We note when information may change over time.
+4. We disclose ads or affiliate relationships when applicable.
+
+## Contact
+
+For corrections, feedback, or partnership inquiries, please use the [Contact page](/en/page/contact/).

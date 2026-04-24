@@ -563,19 +563,37 @@
 
   {{ if .IsPage }}
   {{- $postImage := or .Params.thumbnail site.Params.socialImage site.Params.logo site.Params.favicon -}}
+  {{- $articleSection := "" -}}
+  {{- with .Params.categories }}{{ $articleSection = index . 0 }}{{ end -}}
+  {{- $keywordsCsv := "" -}}
+  {{- with .Params.tags }}{{ $keywordsCsv = delimit . ", " }}{{ end -}}
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     "headline": "{{ .Title }}",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "{{ .Permalink }}"
+    },
     {{- with $postImage }}
     "image": ["{{ . | absURL }}"],
     {{- end }}
     "datePublished": "{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}",
     "dateModified": "{{ .Lastmod.Format "2006-01-02T15:04:05Z07:00" }}",
+    {{- with $articleSection }}
+    "articleSection": "{{ . }}",
+    {{- end }}
+    {{- with $keywordsCsv }}
+    "keywords": "{{ . }}",
+    {{- end }}
+    "wordCount": {{ .WordCount }},
+    "inLanguage": "{{ .Site.Language.Lang }}",
     "author": {
       "@type": "Person",
-      "name": "{{ .Params.author | default "TrendRadar" }}"
+      "name": "{{ .Params.author | default "TrendRadar" }}",
+      "url": "{{ .Site.BaseURL }}"{{ with .Site.Params.authorSameAs }},
+      "sameAs": [{{ range $i, $e := . }}{{ if $i }}, {{ end }}"{{ $e }}"{{ end }}]{{ end }}
     },
     "publisher": {
       "@type": "Organization",

@@ -34,6 +34,21 @@
   </div>
 
   <div class="bg-zinc-700 px-6 py-4 dark:bg-zinc-950">
+    <div class="container mx-auto mb-3">
+      <nav class="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs font-medium text-zinc-200 dark:text-zinc-300" aria-label="Trust pages">
+        {{ if eq .Site.Language.Lang "ko" }}
+        <a href="/ko/page/about/" class="transition-colors hover:text-white">About</a>
+        <a href="/ko/page/privacy-policy/" class="transition-colors hover:text-white">Privacy Policy</a>
+        <a href="/ko/page/contact/" class="transition-colors hover:text-white">Contact</a>
+        <a href="/ko/page/disclaimer/" class="transition-colors hover:text-white">Disclaimer</a>
+        {{ else }}
+        <a href="/en/page/about/" class="transition-colors hover:text-white">About</a>
+        <a href="/en/page/privacy-policy/" class="transition-colors hover:text-white">Privacy Policy</a>
+        <a href="/en/page/contact/" class="transition-colors hover:text-white">Contact</a>
+        <a href="/en/page/disclaimer/" class="transition-colors hover:text-white">Disclaimer</a>
+        {{ end }}
+      </nav>
+    </div>
     <div class="container mx-auto flex items-center justify-between">
       <span class="text-xs font-medium text-zinc-300 dark:text-zinc-400">
         {{ if (isset .Site.Params "copyright") }}
