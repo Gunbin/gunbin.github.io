@@ -13,7 +13,7 @@ Please reach out by email and we will respond as soon as possible.
 
 ## Contact Email
 
-- **Email**: contact@trendradarinsights.com
+- **Email**: gunbin52@gmail.com
 
 ## Inquiry Types
 

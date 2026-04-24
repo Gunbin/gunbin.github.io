@@ -13,7 +13,7 @@ TrendRadar에 관심 가져주셔서 감사합니다.
 
 ## 문의 이메일
 
-- **Email**: contact@trendradarinsights.com
+- **Email**: gunbin52@gmail.com
 
 ## 문의 가능한 내용
 
