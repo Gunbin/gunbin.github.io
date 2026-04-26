@@ -539,6 +539,19 @@
       background-color: #0f172a !important;
     }
 
+    /* 6-1. Mermaid 텍스트 폰트 통일 및 Timeline 제목 위치 미세 보정 */
+    .prose pre code.language-mermaid svg text,
+    .prose pre code.language-mermaid svg tspan,
+    .prose pre code.language-mermaid svg foreignObject,
+    .prose pre code.language-mermaid svg foreignObject div {
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, sans-serif !important;
+    }
+    .prose pre code.language-mermaid svg .timelineTitleText,
+    .prose pre code.language-mermaid svg .titleText {
+      text-anchor: middle !important;
+      transform: translateX(-4px);
+    }
+
     /* Markmap test block */
     .prose pre code.language-markmap,
     .prose pre code.language-mm {
