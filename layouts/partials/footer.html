@@ -234,54 +234,48 @@
 <script type="module">
   import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
 
+  // --- 모던 마케팅 에셋 스타일 컬러 팔레트 ---
   const lightThemeVariables = {
-    fontFamily: "inherit",
+    fontFamily: "Pretendard, -apple-system, BlinkMacSystemFont, sans-serif",
     background: "transparent",
-    primaryColor: "#ffffff",
-    primaryTextColor: "#0b1220",
-    primaryBorderColor: "#3b82f6",
-    lineColor: "#2563eb",
-    secondaryColor: "#f3f8ff",
-    tertiaryColor: "#f8fbff",
-    noteBkgColor: "#fff7ed",
-    noteTextColor: "#9a3412",
-    clusterBkg: "#f6faff",
-    clusterBorder: "#60a5fa",
-    edgeLabelBackground: "#ffffff",
-    pie1: "#2563eb",
-    pie2: "#f97316",
-    pie3: "#10b981",
-    pie4: "#8b5cf6",
-    pie5: "#ef4444",
-    pie6: "#0ea5e9",
+    primaryColor: "#ffffff",         // 노드 배경 (깔끔한 화이트)
+    primaryTextColor: "#334155",     // 노드 텍스트 (세련된 진회색)
+    primaryBorderColor: "#cbd5e1",   // 노드 테두리 (은은한 그레이)
+    lineColor: "#94a3b8",            // 화살표 선 색상
+    secondaryColor: "#f8fafc",       // 보조 노드 배경
+    tertiaryColor: "#f1f5f9",        // 그룹 배경
+    noteBkgColor: "#fef3c7",         // 노트 배경 (따뜻한 노란빛)
+    noteTextColor: "#92400e",        // 노트 텍스트
+    clusterBkg: "#f8fafc",           // 클러스터(박스) 배경
+    clusterBorder: "#e2e8f0",        // 클러스터 테두리
+    edgeLabelBackground: "#ffffff",  // 선 위 글자 배경
+    // 트렌디한 마케팅 포인트 컬러 (파이 차트 등)
+    pie1: "#3b82f6", pie2: "#10b981", pie3: "#f59e0b",
+    pie4: "#8b5cf6", pie5: "#ef4444", pie6: "#0ea5e9",
     pieStrokeColor: "#ffffff",
     pieStrokeWidth: "2px",
-    pieOuterStrokeWidth: "1.5px"
+    pieOuterStrokeWidth: "0px"
   };
 
   const darkThemeVariables = {
-    fontFamily: "inherit",
+    fontFamily: "Pretendard, -apple-system, BlinkMacSystemFont, sans-serif",
     background: "transparent",
-    primaryColor: "#0f172a",
-    primaryTextColor: "#eaf2ff",
-    primaryBorderColor: "#38bdf8",
-    lineColor: "#67e8f9",
-    secondaryColor: "#12233d",
-    tertiaryColor: "#152944",
-    noteBkgColor: "#2b1b36",
-    noteTextColor: "#f5d0fe",
-    clusterBkg: "#0b1a31",
-    clusterBorder: "#0ea5e9",
-    edgeLabelBackground: "#0f172a",
-    pie1: "#38bdf8",
-    pie2: "#fb7185",
-    pie3: "#34d399",
-    pie4: "#a78bfa",
-    pie5: "#fbbf24",
-    pie6: "#22d3ee",
-    pieStrokeColor: "#0f172a",
+    primaryColor: "#1e293b",         // 노드 배경 (다크 슬레이트)
+    primaryTextColor: "#f8fafc",     // 노드 텍스트 (선명한 화이트)
+    primaryBorderColor: "#475569",   // 노드 테두리
+    lineColor: "#64748b",            // 화살표 선 색상
+    secondaryColor: "#0f172a",       // 보조 노드 배경
+    tertiaryColor: "#334155",        // 그룹 배경
+    noteBkgColor: "#422006",         // 노트 배경 (다크 앰버)
+    noteTextColor: "#fde047",        // 노트 텍스트
+    clusterBkg: "#0f172a",           // 클러스터 배경
+    clusterBorder: "#334155",        // 클러스터 테두리
+    edgeLabelBackground: "#1e293b",
+    pie1: "#60a5fa", pie2: "#34d399", pie3: "#fbbf24",
+    pie4: "#a78bfa", pie5: "#f87171", pie6: "#22d3ee",
+    pieStrokeColor: "#1e293b",
     pieStrokeWidth: "2px",
-    pieOuterStrokeWidth: "1.5px"
+    pieOuterStrokeWidth: "0px"
   };
 
   async function renderMermaidByTheme() {
@@ -302,16 +296,19 @@
       theme: "base",
       themeVariables: isDark ? darkThemeVariables : lightThemeVariables,
       securityLevel: "loose",
+      fontFamily: "Pretendard, sans-serif",
       flowchart: {
         htmlLabels: true,
-        curve: "basis"
+        curve: "basis", // 딱딱한 직선 대신 부드러운 곡선 유지
+        padding: 20
       },
       sequence: {
         actorMargin: 50,
-        messageMargin: 40
+        messageMargin: 40,
+        boxTextMargin: 10
       },
       mindmap: {
-        padding: 15
+        padding: 20
       }
     });
 

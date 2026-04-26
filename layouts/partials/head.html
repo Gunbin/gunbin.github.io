@@ -442,49 +442,101 @@
       color: #f3f4f6;
     }
 
-    /* Mermaid diagrams: centered and responsive */
+    /* --- 모던 Mermaid 다이어그램 디자인 (SaaS 대시보드 위젯 스타일) --- */
+
+    /* 1. 세련된 Mac 윈도우 컨테이너 (경계선 및 밝은 캔버스) */
+    .prose pre:has(code.language-mermaid) {
+      position: relative;
+      padding: 3rem 1rem 1.5rem 1rem !important; /* 상단 바 및 내부 여백 확보 */
+      margin: 2.5rem 0;
+      border-radius: 12px;
+      background: #ffffff !important; /* 깔끔한 흰색 캔버스 */
+      border: 1px solid #e2e8f0 !important;
+      box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.05), 0 8px 10px -6px rgba(15, 23, 42, 0.01) !important;
+      overflow: hidden;
+    }
+    .dark .prose pre:has(code.language-mermaid) {
+      background: #0f172a !important; /* 다크모드 캔버스 */
+      border-color: #1e293b !important;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3) !important;
+    }
+
+    /* 2. Mac 상단 타이틀 바 (라이트/다크 테마에 맞춘 모던 컬러) */
+    .prose pre:has(code.language-mermaid)::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2.25rem;
+      background: #f8fafc; /* 연한 그레이 타이틀바 */
+      border-bottom: 1px solid #e2e8f0;
+      border-radius: 12px 12px 0 0;
+      z-index: 1;
+    }
+    .dark .prose pre:has(code.language-mermaid)::before {
+      background: #1e293b;
+      border-bottom-color: #334155;
+    }
+
+    /* 3. Mac 신호등 버튼 (비비드한 원색 대신 트렌디한 파스텔 톤) */
+    .prose pre:has(code.language-mermaid)::after {
+      content: "";
+      position: absolute;
+      top: 0.85rem;
+      left: 1rem;
+      width: 0.65rem;
+      height: 0.65rem;
+      border-radius: 50%;
+      background: #fb7185; /* Soft Red */
+      box-shadow: 1.1rem 0 0 #fbbf24, 2.2rem 0 0 #34d399; /* Soft Yellow, Soft Green */
+      z-index: 2;
+    }
+
+    /* 복사 버튼 숨김 (이미지 에셋 느낌을 살리기 위해 숨김) */
+    .prose pre:has(code.language-mermaid) .copy-btn {
+      display: none !important;
+    }
+
+    /* 4. 다이어그램 크기 정상화 및 스크롤 영역 설정 */
     .prose pre code.language-mermaid {
-      display: block;
+      display: block !important;
       width: 100%;
-      text-align: center;
-      overflow-x: auto;
-      padding: 0.35rem 0 0.1rem;
-      border-radius: 10px;
-      background: linear-gradient(180deg, rgba(59, 130, 246, 0.12) 0%, rgba(59, 130, 246, 0) 48%);
+      overflow-x: auto; /* 화면보다 큰 차트(Journey 등)는 부드럽게 가로 스크롤 */
+      text-align: left !important;
+      background: transparent !important;
+      padding: 0.5rem 0;
     }
-    .dark .prose pre code.language-mermaid {
-      background: linear-gradient(180deg, rgba(56, 189, 248, 0.24) 0%, rgba(56, 189, 248, 0) 46%);
-    }
+
     .prose pre code.language-mermaid svg {
       display: block;
-      margin-left: auto;
-      margin-right: auto;
-      max-width: 100%;
-      height: auto;
+      margin: 0 auto;
+      width: max-content !important;
+      height: auto !important;
       font-family: inherit !important;
-      letter-spacing: -0.005em;
+      letter-spacing: -0.015em;
     }
+
+    /* 5. 노드(박스) 형태 둥글고 세련되게 깎기 */
     .prose pre code.language-mermaid .node rect,
     .prose pre code.language-mermaid .node polygon,
     .prose pre code.language-mermaid .node circle,
     .prose pre code.language-mermaid .node ellipse {
-      rx: 10px;
-      ry: 10px;
+      rx: 12px;
+      ry: 12px;
+      stroke-width: 1.5px;
     }
+
+    /* 6. 텍스트 및 라벨 가독성 개선 */
     .prose pre code.language-mermaid .edgeLabel {
-      font-weight: 500;
+      font-weight: 600;
+      font-size: 0.85em;
+      padding: 0.2rem 0.5rem;
+      color: #475569 !important;
     }
     .dark .prose pre code.language-mermaid .edgeLabel {
-      filter: brightness(1.08);
-    }
-    .prose pre code.language-mermaid .pieTitleText,
-    .prose pre code.language-mermaid .slice {
-      font-weight: 600;
-      fill: #0b1220 !important;
-    }
-    .dark .prose pre code.language-mermaid .pieTitleText,
-    .dark .prose pre code.language-mermaid .slice {
-      fill: #eef6ff !important;
+      color: #cbd5e1 !important;
+      background-color: #0f172a !important;
     }
 
     /* Markmap test block */
