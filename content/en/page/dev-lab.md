@@ -17,6 +17,7 @@ You can add components, typography, and small UI samples here over time in the s
 
 1. [Mermaid gallery](/en/page/mermaid-test/) — flowchart, sequence, mindmap, timeline, pie, gantt, gitGraph, and more
 2. [Markmap test](/en/page/markmap-test/) — heading-based mindmap rendering check
+3. [QuickChart.io test](/en/page/quickchart-test/) — URL-based chart rendering check (Bar/Line/Pie)
 
 ### Hugo components
 

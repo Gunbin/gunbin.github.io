@@ -17,6 +17,7 @@ disableComments: true
 
 1. [Mermaid Gallery](/ko/page/mermaid-test/) — flowchart, sequence, mindmap, timeline, pie, gantt, gitGraph 등
 2. [Markmap Test](/ko/page/markmap-test/) — 헤딩 기반 마인드맵 렌더링 검증
+3. [QuickChart.io Test](/ko/page/quickchart-test/) — URL 기반 차트 렌더링 검증(Bar/Line/Pie)
 
 ### Hugo 컴포넌트
 
