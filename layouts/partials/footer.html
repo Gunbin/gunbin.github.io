@@ -328,6 +328,32 @@
 {{ if and .IsPage (or (findRE "language-markmap" .Content 1) (findRE "(```|~~~)[[:space:]]*markmap" .RawContent 1) (findRE "(```|~~~)[[:space:]]*mm" .RawContent 1)) }}
 <script>
   (function () {
+    function adjustMarkmapHeights() {
+      var svgs = document.querySelectorAll(".prose .markmap svg");
+      if (!svgs.length) return;
+      svgs.forEach(function (svg) {
+        if (typeof svg.getBBox !== "function") return;
+        try {
+          var box = svg.getBBox();
+          if (!box || !isFinite(box.height) || box.height <= 0) return;
+          var topInset = Math.max(0, -Math.floor(box.y));
+          var contentHeight = Math.ceil(topInset + box.height + 56);
+          var safeHeight = Math.max(320, contentHeight);
+          svg.style.setProperty("height", safeHeight + "px", "important");
+        } catch (e) {}
+      });
+    }
+
+    function scheduleMarkmapHeightSync() {
+      var tries = 0;
+      var maxTries = 60;
+      var timer = setInterval(function () {
+        adjustMarkmapHeights();
+        tries += 1;
+        if (tries >= maxTries) clearInterval(timer);
+      }, 200);
+    }
+
     function mountMarkmap() {
       var blocks = document.querySelectorAll("pre > code.language-markmap, pre > code.language-mm");
       if (!blocks.length) return;
@@ -356,13 +382,24 @@
       var s = document.createElement("script");
       s.src = "https://cdn.jsdelivr.net/npm/markmap-autoloader@0.16.0";
       s.defer = true;
+      s.addEventListener("load", function () {
+        scheduleMarkmapHeightSync();
+      });
       document.body.appendChild(s);
+
+      // Initial sync attempt even before loader fires.
+      scheduleMarkmapHeightSync();
     }
+
     if (document.readyState === "loading") {
       document.addEventListener("DOMContentLoaded", mountMarkmap);
     } else {
       mountMarkmap();
     }
+
+    window.addEventListener("resize", function () {
+      adjustMarkmapHeights();
+    });
   })();
 </script>
 {{ end }}

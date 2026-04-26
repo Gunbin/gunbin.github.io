@@ -552,49 +552,100 @@
       transform: translateX(-4px);
     }
 
-    /* Markmap test block */
-    .prose pre code.language-markmap,
-    .prose pre code.language-mm {
-      display: block;
-      width: 100%;
-      padding: 0.35rem 0 0.1rem;
-      border-radius: 10px;
-      /* Mermaid와 동일 톤(로딩/미리보기 단계) */
-      background: linear-gradient(180deg, rgba(59, 130, 246, 0.12) 0%, rgba(59, 130, 246, 0) 48%);
-    }
-    .dark .prose pre code.language-markmap,
-    .dark .prose pre code.language-mm {
-      background: linear-gradient(180deg, rgba(56, 189, 248, 0.24) 0%, rgba(56, 189, 248, 0) 46%);
+    /* --- 모던 Markmap 마인드맵 디자인 (SaaS 대시보드 위젯 스타일) --- */
+
+    /* 1. 로딩 전 코드 블록 껍데기 숨김 (깜빡임/블루 틴트 방지) */
+    .prose pre:has(code.language-markmap),
+    .prose pre:has(code.language-mm) {
+      display: none !important;
     }
 
-    /* Markmap: rendered container (replaces pre) */
+    /* 2. 세련된 Mac 윈도우 컨테이너 (Mermaid와 완벽히 동일한 UI) */
     .prose .markmap,
     .prose div.markmap {
       position: relative;
-      min-height: 400px;
-      width: 100%;
+      padding: 2.65rem 0.75rem 0.85rem 0.75rem !important; /* 상단 바 유지 + 과한 내부 여백 축소 */
       margin: 1.5rem 0;
       border-radius: 12px;
-      overflow: hidden;
-      /* 라이트: 순백 대신 Mermaid 블록과 같은 계열(블루 틴트, 살짝 어둡게), 다크와 구분 */
-      background: linear-gradient(180deg, rgba(59, 130, 246, 0.16) 0%, #dce4ee 38%, #cfd9e6 100%);
-      border: 1px solid rgba(59, 130, 246, 0.18);
-      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06);
+      background: #ffffff !important; /* 깔끔한 흰색 캔버스 */
+      border: 1px solid #e2e8f0 !important;
+      box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.05), 0 8px 10px -6px rgba(15, 23, 42, 0.01) !important;
+      overflow: auto; /* 콘텐츠가 클 때 잘리지 않도록 내부 스크롤 허용 */
+      width: 100%;
     }
     .dark .prose .markmap,
     .dark .prose div.markmap {
-      background: #0b1220;
-      border-color: #334155;
+      background: #0f172a !important; /* 다크모드 캔버스 */
+      border-color: #1e293b !important;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3) !important;
     }
+
+    /* 3. Mac 상단 타이틀 바 */
+    .prose .markmap::before,
+    .prose div.markmap::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2.25rem;
+      background: #f8fafc; /* 연한 그레이 타이틀바 */
+      border-bottom: 1px solid #e2e8f0;
+      border-radius: 12px 12px 0 0;
+      z-index: 1;
+    }
+    .dark .prose .markmap::before,
+    .dark .prose div.markmap::before {
+      background: #1e293b;
+      border-bottom-color: #334155;
+    }
+
+    /* 4. Mac 신호등 버튼 (파스텔 톤) */
+    .prose .markmap::after,
+    .prose div.markmap::after {
+      content: "";
+      position: absolute;
+      top: 0.85rem;
+      left: 1rem;
+      width: 0.65rem;
+      height: 0.65rem;
+      border-radius: 50%;
+      background: #fb7185;
+      box-shadow: 1.1rem 0 0 #fbbf24, 2.2rem 0 0 #34d399;
+      z-index: 2;
+    }
+
+    /* 5. Markmap SVG 영역 캔버스 크기 */
     .prose .markmap svg {
       display: block;
       width: 100% !important;
-      min-height: 360px;
-      height: clamp(360px, 56vh, 680px);
+      height: auto !important;
     }
+
+    /* 6. Markmap 텍스트 가독성 강화 (Mermaid 톤 동기화) */
     .prose .markmap svg text {
-      font-weight: 600 !important;
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, sans-serif !important;
+      font-weight: 700 !important;
+      font-size: 15px !important;
+      fill: #334155 !important; /* 라이트모드 텍스트: 슬레이트 그레이 */
     }
+    .dark .prose .markmap svg text {
+      fill: #f8fafc !important; /* 다크모드 텍스트: 화이트 */
+    }
+
+    /* 7. 가지(Branch) 라인 및 노드 디테일 튜닝 */
+    .prose .markmap svg path {
+      opacity: 0.85; /* 선 색상이 너무 튀지 않도록 살짝 파스텔 톤다운 */
+    }
+    .prose .markmap svg circle {
+      fill: #ffffff !important; /* 노드 끝 동그라미 내부를 캔버스와 동일한 화이트로 */
+      stroke-width: 2.5px;
+    }
+    .dark .prose .markmap svg circle {
+      fill: #0f172a !important; /* 다크모드 캔버스 색상과 동기화 */
+    }
+
+    /* 우측 하단 기본 툴바(기능 버튼) 숨김 */
     .prose .markmap .markmap-toolbar {
       display: none !important;
     }
