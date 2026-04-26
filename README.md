@@ -1,207 +1,167 @@
-# Blist theme for Hugo
+# TrendRadar Blog (Hugo)
 
-![Latest Release](https://img.shields.io/github/tag/apvarun/blist-hugo-theme.svg)
-![Blist hugo theme](https://img.shields.io/github/license/apvarun/blist-hugo-theme)
-![Hugo generator](https://img.shields.io/badge/generator-hugo-brightgreen)
+`autoHugoBlog`는 Hugo 기반의 다국어(ko/en) 기술/트렌드 블로그입니다.  
+이 문서는 운영자가 사이트를 **검색엔진 친화적으로** 유지하면서 안정적으로 배포하기 위한 실무 가이드입니다.
 
-Blist is a clean and fast blog theme for your Hugo site.
+---
 
-![Blist Icon](https://github.com/apvarun/blist-hugo-theme/raw/main/images/blist-logo.png)
+## 1) 목표
 
-**Features:**
+- 사용자와 검색엔진 모두가 이해하기 쉬운 정보 구조 유지
+- 빠른 렌더링, 명확한 메타데이터, 신뢰 가능한 정책 페이지 제공
+- 검색엔진 정책을 준수하는 화이트햇 SEO 운영
 
-- Responsive content / Mobile-optimized
-- Blog pagination
-- Customizable Text Search
-- Table of contents
-- Social links
-- Code highlighting
-- Color customization
-- Dark mode
-- Fast performance
-- SEO optimized
-- i18n support
-- Support comments systems
-  - Disqus (hugo native)
-  - giscus
-  - utterances
+---
 
-## Preview
+## 2) 로컬 실행
 
-![Preview](https://github.com/apvarun/blist-hugo-theme/raw/main/images/screenshot.png)
+요구 사항:
 
-➡️ [DEMO](https://blist.vercel.app/)
+- Hugo Extended (권장: 최신 안정 버전)
+- Node.js / npm (테마 자산 빌드용)
 
-## Get the theme
+실행:
 
-Minimum Hugo Version: **0.110.0**
-
-Run from the root of your Hugo site:
-
-```sh
-git clone https://github.com/apvarun/blist-hugo-theme.git themes/blist
+```bash
+npm install
+hugo server -D
 ```
 
-Alternatively, you can include this repository as a [git submodule](https://git-scm.com/docs/gitsubmodules). This makes it easier to update this theme if you have your Hugo site in git as well:
+빌드:
 
-```sh
-git submodule add https://github.com/apvarun/blist-hugo-theme.git themes/blist
+```bash
+hugo --minify
 ```
 
-## Preview the theme with example content
+---
 
-Blist theme ships with an fully configured example site. For a quick preview:
+## 3) 프로젝트 구조(핵심)
 
-Copy the `package.json` file from `themes/blist` folder to your hugo website root folder, and run `npm install`.
+- `content/ko/`, `content/en/`: 다국어 콘텐츠
+- `layouts/partials/`: 공통 UI/SEO 관련 템플릿
+- `layouts/shortcodes/`: 커스텀 숏코드
+- `static/`: 정적 자원(아이콘, 검증 파일 등)
+- `hugo.toml`: 사이트 전역 설정
 
-```sh
-cd themes/blist/exampleSite/
-hugo serve --themesDir ../..
+---
+
+## 4) 검색엔진 친화 운영 원칙
+
+### A. 기본 기술 SEO
+
+- Canonical URL을 페이지마다 일관되게 출력
+- 다국어 페이지는 `hreflang` 쌍이 맞도록 유지
+- `sitemap.xml`과 `robots.txt`를 배포 환경에서 항상 확인
+- 404/리다이렉트 체계를 깔끔하게 유지 (죽은 링크 최소화)
+
+### B. 메타데이터 품질
+
+- 각 글에 고유한 `title`, `description`, `keywords` 부여
+- OG/Twitter 카드 메타가 썸네일과 함께 정상 출력되는지 점검
+- 게시일(`date`)과 수정일(`lastmod`)은 실제 변경 이력과 일치시킴
+
+### C. 구조화 데이터(Structured Data)
+
+- `BlogPosting`, `BreadcrumbList` 등 JSON-LD를 손상 없이 유지
+- 문서 내용과 구조화 데이터 값이 서로 모순되지 않게 관리
+
+### D. 콘텐츠 품질
+
+- 검색 의도에 맞는 제목/소제목(H2/H3) 구조 사용
+- 내부 링크를 통해 관련 문서 탐색 경로 제공
+- 과도한 키워드 반복, 의미 없는 자동 생성 문구 지양
+
+### E. 성능/크롤링 접근성
+
+- 이미지 크기/포맷 최적화, 의미 있는 `alt` 텍스트 작성
+- 불필요한 대형 스크립트 로드 최소화
+- 모바일 가독성(폰트/여백/대비) 유지
+
+---
+
+## 5) 콘텐츠 작성 체크리스트
+
+새 글 작성 전/후 최소 체크:
+
+- [ ] `title`, `description`, `date`, `lastmod`, `tags`, `categories` 입력
+- [ ] 대표 이미지(또는 OG용 썸네일) 준비
+- [ ] 본문 H2/H3 구조 정리 및 요약 문단 포함
+- [ ] 관련 문서 내부 링크 2개 이상 연결
+- [ ] 오탈자/사실관계/깨진 링크 확인
+
+권장 front matter 예시:
+
+```yaml
+---
+title: "문서 제목"
+description: "검색결과에 노출될 요약"
+date: 2026-04-26
+lastmod: 2026-04-26
+tags: ["seo", "hugo"]
+categories: ["blog"]
+draft: false
+---
 ```
 
-Then visit `http://localhost:1313/` in your browser to view the example site.
+---
 
-## Configuring theme to a hugo website
+## 6) 신뢰 페이지 운영
 
-1. Copy `package.json` and `package-lock.json` to the root folder of your website
-2. Run `npm install` to install required packages for theme
-3. Run `npm i -g postcss-cli` to use PostCSS with Hugo build
-4. Set `theme = 'blist'` in hugo.toml
-5. Run `npm start` to start your local server
+아래 페이지는 항상 최신 상태를 유지:
 
-Make sure to commit the above changes to your repository.
+- About
+- Privacy Policy
+- Contact
+- Disclaimer
 
-## Publish your website
+권장 사항:
 
-When deploying to services like Netlify or Vercel, use the following command for building your site:
+- 정책 페이지는 광고/댓글/잡다한 UI를 최소화
+- 문의 이메일/연락 채널을 명확히 표시
+- 변경 시 `lastmod` 갱신
 
-```sh
-npm i && HUGO_ENVIRONMENT=production hugo --gc
-```
-The parameter `HUGO_ENVIRONMENT=production` enables the execution of css purging.
+---
 
-## Add content
+## 7) 배포 전 점검
 
-The following explains how to add content to your Hugo site. You can find sample content in the `exampleSite/` folder.
+배포 전에 반드시 실행:
 
-### Structure:
-
-    .
-    ├── ...
-    ├── blog       # Blog Section
-    │   ├── post1   # Post 1
-    │   ├── post2   # Post 2
-    │   └── _index
-    └── ...
-
-## Configure your site
-
-From `exampleSite/`, copy `hugo.toml` to the root folder of your Hugo site and change the fields as you like. Helpful comments are provided.
-
-### Menu
-
-Menu in Blist theme is pre-set to have all section names. You can include custom links in header using the `menu.main` option hugo.toml.
-
-### Logo
-
-`logo` param in the site config will allow to use an image as the logo instead of the website name. It is localizable and so can have different logo for different languages
-
-### Darkmode
-
-`[params.darkModeToggle]` enables the dark mode toggle in header. The preference is then saved so that the mode is automatically chosen for return visits.
-
-### Customize Ascent Color
-
-Use `[params.ascentColor]` to change the default `pink` color to any supported color from the [list of default colors](https://tailwindcss.com/docs/customizing-colors) from Tailwind CSS.
-
-Some example values: bg-blue-200, bg-yellow-300
-
-### Search
-
-`[params.enableSearch]` option is used to enable search option in the theme.
-
-- Adds the search icon in header
-- Generates the search index
-- Uses fuse.js to enable searching through content
-
-In order to search, you can either click on the search icon from header or press `Ctrl/Cmd + /` key combination.
-
-**Note:**
-
-Make sure to enable JSON in outputs array.
-
-```
-[outputs]
-  home = ["HTML", "RSS", "JSON"]
+```bash
+hugo --minify
 ```
 
-### LaTeX
+점검 항목:
 
-Enable mathematical options: set `math: true` in your markdown frontmatter
+- [ ] 빌드 에러/경고 확인
+- [ ] 대표 페이지(홈, 카테고리, 포스트, 정책 페이지) 수동 확인
+- [ ] 다크/라이트 모드 렌더링 확인
+- [ ] Mermaid/Markmap/숏코드 렌더링 확인
 
-### Google Analytics
+---
 
-Set `services.googleAnalytics.ID` in `hugo.toml` to activate Hugo's [embedded Google Analytics template](https://gohugo.io/templates/embedded/#google-analytics).
+## 8) 정책 준수 안내
 
-## Performance
+이 프로젝트는 검색엔진 정책을 우회하거나 클로킹하는 방식이 아니라,
+사용자에게 유익한 정보와 명확한 문서 구조를 제공하는 방식으로 검색 친화성을 높입니다.
 
-[![Pagespeed Insights Performance](https://github.com/apvarun/blist-hugo-theme/raw/main/images/pagespeed-performance.png)](https://developers.google.com/speed/pagespeed/insights/?url=https%3A%2F%2Fblist.vercel.app&tab=mobile)
+핵심은 다음 세 가지입니다:
 
-## Issues
+- 신뢰 가능한 콘텐츠
+- 일관된 메타데이터
+- 안정적인 페이지 성능
 
-If you have a question, please [open an issue](https://github.com/apvarun/blist-hugo-theme/issues) for help and to help those who come after you. The more information you can provide, the better!
+---
 
-## Contributing
+## 9) 유지보수 메모
 
-Contributions, issues, and feature requests are welcome! For major changes, please open an issue first to discuss what you would like to change.
+- 대규모 스타일 변경 전: 다크/라이트 대비 및 모바일 가독성 먼저 검증
+- 템플릿 수정 후: 실제 URL 렌더 결과(메타/구조화 데이터) 확인
+- 콘텐츠 자동화 도구를 쓰더라도 최종 편집/검수는 수동으로 수행
 
-<table>
-  <tr>
-    <td align="center"><a href="https://github.com/apvarun"><img alt="apvarun"
-          src="https://avatars.githubusercontent.com/u/8411309?v=4" width="117" /><br />apvarun</a></td>
-    <td align="center"><a href="https://github.com/Ravinou"><img alt="Ravinou"
-          src="https://avatars.githubusercontent.com/u/39600829?v=4" width="117" /><br />Ravinou</a></td>
-    <td align="center"><a href="https://github.com/engel-b"><img alt="engel-b"
-          src="https://avatars.githubusercontent.com/u/5812810?v=4" width="117" /><br />engel-b</a></td>
-    <td align="center"><a href="https://github.com/chris-gillatt"><img alt="chris-gillatt"
-          src="https://avatars.githubusercontent.com/u/9963006?v=4" width="117" /><br />chris-gillatt</a></td>
-    <td align="center"><a href="https://github.com/apps/dependabot"><img alt="dependabot[bot]"
-          src="https://avatars.githubusercontent.com/in/29110?v=4" width="117" /><br />dependabot[bot]</a></td>
-    <td align="center"><a href="https://github.com/xLexip"><img alt="xLexip"
-          src="https://avatars.githubusercontent.com/u/46321162?v=4" width="117" /><br />xLexip</a></td>
-  </tr>
-  <tr>
-    <td align="center"><a href="https://github.com/AntoineSoetewey"><img alt="AntoineSoetewey"
-          src="https://avatars.githubusercontent.com/u/17910063?v=4" width="117" /><br />AntoineSoetewey</a></td>
-    <td align="center"><a href="https://github.com/chiragksharma"><img alt="chiragksharma"
-          src="https://avatars.githubusercontent.com/u/74889769?v=4" width="117" /><br />chiragksharma</a></td>
-    <td align="center"><a href="https://github.com/dlecan"><img alt="dlecan"
-          src="https://avatars.githubusercontent.com/u/586631?v=4" width="117" /><br />dlecan</a></td>
-    <td align="center"><a href="https://github.com/jpiaskowski"><img alt="jpiaskowski"
-          src="https://avatars.githubusercontent.com/u/8420943?v=4" width="117" /><br />jpiaskowski</a></td>
-    <td align="center"><a href="https://github.com/lucab85"><img alt="lucab85"
-          src="https://avatars.githubusercontent.com/u/24267107?v=4" width="117" /><br />lucab85</a></td>
-    <td align="center"><a href="https://github.com/Marty"><img alt="Marty"
-          src="https://avatars.githubusercontent.com/u/100658?v=4" width="117" /><br />Marty</a></td>
-  </tr>
-  <tr>
-    <td align="center"><a href="https://github.com/ernavdeepkr"><img alt="ernavdeepkr"
-          src="https://avatars.githubusercontent.com/u/50796185?v=4" width="117" /><br />ernavdeepkr</a></td>
-    <td align="center"><a href="https://github.com/roypeter"><img alt="roypeter"
-          src="https://avatars.githubusercontent.com/u/16620459?v=4" width="117" /><br />roypeter</a></td>
-    <td align="center"><a href="https://github.com/janvanveldhuizen"><img alt="janvanveldhuizen"
-      src="https://avatars.githubusercontent.com/u/43573150?v=4" width="117" /><br />janvanveldhuizen</a></td>
-    <td align="center"><a href="https://github.com/jmflaherty"><img alt="jmflaherty"
-      src="https://avatars.githubusercontent.com/u/12985011?v=4" width="117" /><br />jmflaherty</a></td>
-  </tr>
-</table>
+---
 
 ## License
 
-Licensed under [MIT](LICENSE)
+테마 및 서드파티 라이선스는 각 원저작권 조건을 따릅니다.  
+프로젝트 운영 정책 문서는 본 저장소의 실제 설정/구현을 기준으로 관리합니다.
 
-## 🤝 Support
-
-Give a ⭐️ if you like this project!
-
-<a href="https://www.buymeacoffee.com/apvarun" target="_blank" rel="noopener"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" height="40" width="145" alt="Buy Me A Coffee"></a>
