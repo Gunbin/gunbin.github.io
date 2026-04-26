@@ -35,17 +35,21 @@
 
   <div class="bg-zinc-700 px-6 py-4 dark:bg-zinc-950">
     <div class="container mx-auto mb-3">
-      <nav class="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs font-medium text-zinc-200 dark:text-zinc-300" aria-label="Trust pages">
+      <nav class="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs font-medium text-zinc-200 dark:text-zinc-300" aria-label="Site footer links">
         {{ if eq .Site.Language.Lang "ko" }}
         <a href="/ko/page/about/" class="transition-colors hover:text-white">About</a>
         <a href="/ko/page/privacy-policy/" class="transition-colors hover:text-white">Privacy Policy</a>
         <a href="/ko/page/contact/" class="transition-colors hover:text-white">Contact</a>
         <a href="/ko/page/disclaimer/" class="transition-colors hover:text-white">Disclaimer</a>
+        <span class="text-zinc-500" aria-hidden="true">|</span>
+        <a href="/ko/page/dev-lab/" class="text-zinc-100 transition-colors hover:text-indigo-200" title="렌더링·UI 실험 샌드박스">Dev Lab</a>
         {{ else }}
         <a href="/en/page/about/" class="transition-colors hover:text-white">About</a>
         <a href="/en/page/privacy-policy/" class="transition-colors hover:text-white">Privacy Policy</a>
         <a href="/en/page/contact/" class="transition-colors hover:text-white">Contact</a>
         <a href="/en/page/disclaimer/" class="transition-colors hover:text-white">Disclaimer</a>
+        <span class="text-zinc-500" aria-hidden="true">|</span>
+        <a href="/en/page/dev-lab/" class="text-zinc-100 transition-colors hover:text-indigo-200" title="Rendering &amp; UI sandbox">Dev Lab</a>
         {{ end }}
       </nav>
     </div>
@@ -86,6 +90,7 @@
       localStorage.setItem('darkmode', 'dark')
     }
     if (typeof window.syncCusdisTheme === 'function') window.syncCusdisTheme()
+    if (typeof window.syncMermaidTheme === 'function') window.syncMermaidTheme()
   }
   if (darkmode) { darkmode.addEventListener('click', toggleDarkMode); }
   const darkStorage = localStorage.getItem('darkmode');
@@ -224,3 +229,143 @@
     }
   }
 </script>
+
+{{ if and .IsPage (findRE "<code class=\"language-mermaid\"" .Content 1) }}
+<script type="module">
+  import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+
+  const lightThemeVariables = {
+    fontFamily: "inherit",
+    background: "transparent",
+    primaryColor: "#ffffff",
+    primaryTextColor: "#0b1220",
+    primaryBorderColor: "#3b82f6",
+    lineColor: "#2563eb",
+    secondaryColor: "#f3f8ff",
+    tertiaryColor: "#f8fbff",
+    noteBkgColor: "#fff7ed",
+    noteTextColor: "#9a3412",
+    clusterBkg: "#f6faff",
+    clusterBorder: "#60a5fa",
+    edgeLabelBackground: "#ffffff",
+    pie1: "#2563eb",
+    pie2: "#f97316",
+    pie3: "#10b981",
+    pie4: "#8b5cf6",
+    pie5: "#ef4444",
+    pie6: "#0ea5e9",
+    pieStrokeColor: "#ffffff",
+    pieStrokeWidth: "2px",
+    pieOuterStrokeWidth: "1.5px"
+  };
+
+  const darkThemeVariables = {
+    fontFamily: "inherit",
+    background: "transparent",
+    primaryColor: "#0f172a",
+    primaryTextColor: "#eaf2ff",
+    primaryBorderColor: "#38bdf8",
+    lineColor: "#67e8f9",
+    secondaryColor: "#12233d",
+    tertiaryColor: "#152944",
+    noteBkgColor: "#2b1b36",
+    noteTextColor: "#f5d0fe",
+    clusterBkg: "#0b1a31",
+    clusterBorder: "#0ea5e9",
+    edgeLabelBackground: "#0f172a",
+    pie1: "#38bdf8",
+    pie2: "#fb7185",
+    pie3: "#34d399",
+    pie4: "#a78bfa",
+    pie5: "#fbbf24",
+    pie6: "#22d3ee",
+    pieStrokeColor: "#0f172a",
+    pieStrokeWidth: "2px",
+    pieOuterStrokeWidth: "1.5px"
+  };
+
+  async function renderMermaidByTheme() {
+    const isDark = document.documentElement.classList.contains("dark");
+    const blocks = document.querySelectorAll("code.language-mermaid");
+    if (!blocks.length) return;
+
+    blocks.forEach((block) => {
+      if (!block.dataset.mermaidSource) {
+        block.dataset.mermaidSource = block.textContent;
+      }
+      block.textContent = block.dataset.mermaidSource;
+      block.removeAttribute("data-processed");
+    });
+
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: "base",
+      themeVariables: isDark ? darkThemeVariables : lightThemeVariables,
+      securityLevel: "loose",
+      flowchart: {
+        htmlLabels: true,
+        curve: "basis"
+      },
+      sequence: {
+        actorMargin: 50,
+        messageMargin: 40
+      },
+      mindmap: {
+        padding: 15
+      }
+    });
+
+    await mermaid.run({
+      querySelector: "code.language-mermaid"
+    });
+  }
+
+  window.syncMermaidTheme = () => {
+    renderMermaidByTheme().catch(() => {});
+  };
+
+  window.syncMermaidTheme();
+</script>
+{{ end }}
+
+{{ if and .IsPage (or (findRE "language-markmap" .Content 1) (findRE "(```|~~~)[[:space:]]*markmap" .RawContent 1) (findRE "(```|~~~)[[:space:]]*mm" .RawContent 1)) }}
+<script>
+  (function () {
+    function mountMarkmap() {
+      var blocks = document.querySelectorAll("pre > code.language-markmap, pre > code.language-mm");
+      if (!blocks.length) return;
+      if (!window.markmap) {
+        window.markmap = {
+          autoLoader: {
+            toolbar: false,
+            fit: true
+          }
+        };
+      }
+      blocks.forEach(function (code) {
+        var pre = code.parentElement;
+        if (!pre || pre.tagName !== "PRE") return;
+        var md = code.textContent || "";
+        var wrap = document.createElement("div");
+        wrap.className = "markmap";
+        var tmpl = document.createElement("script");
+        tmpl.type = "text/template";
+        tmpl.textContent = md;
+        wrap.appendChild(tmpl);
+        pre.replaceWith(wrap);
+      });
+      if (window.__markmapAutoloaded) return;
+      window.__markmapAutoloaded = true;
+      var s = document.createElement("script");
+      s.src = "https://cdn.jsdelivr.net/npm/markmap-autoloader@0.16.0";
+      s.defer = true;
+      document.body.appendChild(s);
+    }
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", mountMarkmap);
+    } else {
+      mountMarkmap();
+    }
+  })();
+</script>
+{{ end }}

@@ -442,6 +442,150 @@
       color: #f3f4f6;
     }
 
+    /* Mermaid diagrams: centered and responsive */
+    .prose pre code.language-mermaid {
+      display: block;
+      width: 100%;
+      text-align: center;
+      overflow-x: auto;
+      padding: 0.35rem 0 0.1rem;
+      border-radius: 10px;
+      background: linear-gradient(180deg, rgba(59, 130, 246, 0.12) 0%, rgba(59, 130, 246, 0) 48%);
+    }
+    .dark .prose pre code.language-mermaid {
+      background: linear-gradient(180deg, rgba(56, 189, 248, 0.24) 0%, rgba(56, 189, 248, 0) 46%);
+    }
+    .prose pre code.language-mermaid svg {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      max-width: 100%;
+      height: auto;
+      font-family: inherit !important;
+      letter-spacing: -0.005em;
+    }
+    .prose pre code.language-mermaid .node rect,
+    .prose pre code.language-mermaid .node polygon,
+    .prose pre code.language-mermaid .node circle,
+    .prose pre code.language-mermaid .node ellipse {
+      rx: 10px;
+      ry: 10px;
+    }
+    .prose pre code.language-mermaid .edgeLabel {
+      font-weight: 500;
+    }
+    .dark .prose pre code.language-mermaid .edgeLabel {
+      filter: brightness(1.08);
+    }
+    .prose pre code.language-mermaid .pieTitleText,
+    .prose pre code.language-mermaid .slice {
+      font-weight: 600;
+      fill: #0b1220 !important;
+    }
+    .dark .prose pre code.language-mermaid .pieTitleText,
+    .dark .prose pre code.language-mermaid .slice {
+      fill: #eef6ff !important;
+    }
+
+    /* Markmap test block */
+    .prose pre code.language-markmap,
+    .prose pre code.language-mm {
+      display: block;
+      width: 100%;
+      padding: 0.35rem 0 0.1rem;
+      border-radius: 10px;
+      /* Mermaid와 동일 톤(로딩/미리보기 단계) */
+      background: linear-gradient(180deg, rgba(59, 130, 246, 0.12) 0%, rgba(59, 130, 246, 0) 48%);
+    }
+    .dark .prose pre code.language-markmap,
+    .dark .prose pre code.language-mm {
+      background: linear-gradient(180deg, rgba(56, 189, 248, 0.24) 0%, rgba(56, 189, 248, 0) 46%);
+    }
+
+    /* Markmap: rendered container (replaces pre) */
+    .prose .markmap,
+    .prose div.markmap {
+      position: relative;
+      min-height: 400px;
+      width: 100%;
+      margin: 1.5rem 0;
+      border-radius: 12px;
+      overflow: hidden;
+      /* 라이트: 순백 대신 Mermaid 블록과 같은 계열(블루 틴트, 살짝 어둡게), 다크와 구분 */
+      background: linear-gradient(180deg, rgba(59, 130, 246, 0.16) 0%, #dce4ee 38%, #cfd9e6 100%);
+      border: 1px solid rgba(59, 130, 246, 0.18);
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06);
+    }
+    .dark .prose .markmap,
+    .dark .prose div.markmap {
+      background: #0b1220;
+      border-color: #334155;
+    }
+    .prose .markmap svg {
+      display: block;
+      width: 100% !important;
+      min-height: 360px;
+      height: clamp(360px, 56vh, 680px);
+    }
+    .prose .markmap svg text {
+      font-weight: 600 !important;
+    }
+    .prose .markmap .markmap-toolbar {
+      display: none !important;
+    }
+
+    /* Hugo shortcode callouts */
+    .shortcode-tip,
+    .shortcode-warning,
+    .shortcode-info {
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+      margin: 1rem 0;
+      padding: 0.9rem 1rem;
+      border-radius: 12px;
+      border: 1px solid transparent;
+    }
+    .shortcode-icon {
+      font-size: 1.1rem;
+      line-height: 1.4;
+      margin-top: 0.05rem;
+    }
+    .shortcode-body > :first-child { margin-top: 0; }
+    .shortcode-body > :last-child { margin-bottom: 0; }
+
+    .shortcode-tip {
+      background: #ecfdf5;
+      border-color: #a7f3d0;
+      color: #065f46;
+    }
+    .shortcode-warning {
+      background: #fffbeb;
+      border-color: #fcd34d;
+      color: #92400e;
+    }
+    .shortcode-info {
+      background: #eff6ff;
+      border-color: #93c5fd;
+      color: #1e3a8a;
+    }
+
+    .dark .shortcode-tip {
+      background: rgba(16, 185, 129, 0.16);
+      border-color: rgba(16, 185, 129, 0.45);
+      color: #a7f3d0;
+    }
+    .dark .shortcode-warning {
+      background: rgba(245, 158, 11, 0.16);
+      border-color: rgba(245, 158, 11, 0.45);
+      color: #fde68a;
+    }
+    .dark .shortcode-info {
+      background: rgba(59, 130, 246, 0.16);
+      border-color: rgba(59, 130, 246, 0.45);
+      color: #bfdbfe;
+    }
+
     /* C2: Code block Copy button (sits inside the Mac top-bar) */
     .prose pre .copy-btn {
       position: absolute;
