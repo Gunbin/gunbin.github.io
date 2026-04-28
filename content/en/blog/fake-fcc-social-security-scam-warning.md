@@ -23,18 +23,18 @@ Most generic warnings tell you to "be careful," but they don't explain why this 
 
 Scammers aren't just guessing anymore; they're leveraging current events to sound legitimate. They've begun referencing the **David Morens NIH indictment** news to manufacture a sense of a "government-wide" investigation. By tying their fake script to real-world headlines about federal probes, they make the "compromise" of your SSN feel like part of a larger, legitimate legal sweep.
 
-{{< sequenceDiagram >}}
+```mermaid
 sequenceDiagram
-    participant S as Scammer (Spoofed FCC)
+    participant S as Scammer
     participant V as Victim
-    participant A as Official SSA/FCC
-    S->>V: Call displays "FCC Official"
-    S->>V: "Your SSN is linked to a crime/NIH investigation."
-    V->>S: "How do I fix this?"
-    S->>V: "Verify your full SSN and pay a 'safety bond'."
+    participant A as OfficialAgency
+    S->>V: Caller says FCC official
+    S->>V: Your SSN is linked to a crime
+    V->>S: How do I fix this
+    S->>V: Verify SSN and pay safety bond
     Note over V,A: Reality Check
-    A--xV: No record of call; No such procedure exists.
-{{< /sequenceDiagram >}}
+    A-->>V: No record and no such procedure
+```
 
 ### How to Tell If a Call From the FCC is Real
 
