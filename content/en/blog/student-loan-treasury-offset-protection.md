@@ -24,6 +24,7 @@ Because this process operates under federal authority, there is no requirement f
 
 {{< warning >}}
 The government does not need a court order to execute a Treasury Offset. If your debt is in default, assume the offset is active until you receive official confirmation of a status change.
+{{< /warning >}}
 {{< info >}}
 Recent budget discussions, including proposals to reduce education spending, underscore a broader push toward tighter fiscal oversight and aggressive debt recovery. Stay proactive with your loan status to avoid being caught in these policy shifts.
 {{< /info >}}
