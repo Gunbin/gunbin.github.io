@@ -1,0 +1,28 @@
+{{- /*
+  financeOnlyIndexing == true 일 때만 사용.
+  출력: "true" 또는 "false" (공백 없음)
+  복구: hugo.toml 에서 financeOnlyIndexing = false
+*/ -}}
+{{- $only := site.Params.financeOnlyIndexing | default false -}}
+{{- if not $only -}}true{{- else -}}
+{{- $allow := false -}}
+{{- /* head 가 본문보다 먼저 렌더되어 .Paginator 를 여기서 쓰면 Hugo 가 기본(10)으로 Paginator 를 먼저 만들고,
+     본문의 .Paginate ... 6 이 무시됨 → URL 로만 2페이지 이후 판별 */ -}}
+{{- $paginatedURL := gt (len (findRE `/page/[0-9]+/` .RelPermalink)) 0 -}}
+{{- if and .IsNode $paginatedURL -}}
+{{- /* 목록 2페이지 이후 — 색인 제외 */ -}}
+{{- else if .IsHome -}}{{- $allow = true -}}
+{{- else if eq .Kind "term" -}}
+  {{- if and (eq .Section "categories") (eq (lower .Data.Term) "finance") -}}{{- $allow = true -}}{{- end -}}
+{{- else if eq .Kind "taxonomy" -}}
+{{- /* /categories/, /tags/ 상위 목록 제외 */ -}}
+{{- else if .IsPage -}}
+  {{- if eq .Section "page" -}}{{- $allow = true -}}{{- end -}}
+  {{- if eq .Section "blog" -}}
+    {{- range .Params.categories | default slice -}}
+      {{- if eq (lower (printf "%s" .)) "finance" -}}{{- $allow = true -}}{{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- if $allow -}}true{{- else -}}false{{- end -}}
+{{- end -}}

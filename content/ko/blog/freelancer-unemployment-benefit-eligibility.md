@@ -69,7 +69,7 @@ stateDiagram-v2
 
 업무 지시 내용을 명확히 기록해두는 것이 나중에 큰 힘이 됩니다. 구두 지시가 많다면 기록용 장치를 활용하는 것도 방법이죠.
 
-{{< coupangLink:녹음기 >}}
+{{< coupangLink "녹음기" />}}
 
 ![alt](https://res.cloudinary.com/dvnespequ/image/upload/f_auto,q_auto/v1/blogAutoPosting/cwskcrskrorthfmw6ulq "freelancer working with evidence documents and smartphone")
 

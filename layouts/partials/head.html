@@ -12,6 +12,13 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+  {{- if site.Params.financeOnlyIndexing }}
+  {{- $financeIdx := strings.TrimSpace (plainify (partial "finance-allow-index.html" .)) }}
+  {{- if ne $financeIdx "true" }}
+  <meta name="robots" content="noindex, follow" />
+  {{- end }}
+  {{- end }}
+
   <link rel="icon" href="{{ if (isset .Site.Params "favicon") }}{{ .Site.Params.favicon }}{{ else }}/favicon.ico{{ end }}">
 
   <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />

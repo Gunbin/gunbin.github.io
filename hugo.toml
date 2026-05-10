@@ -3,6 +3,9 @@ metaDataFormat = "yaml"
 title = "TrendRadar Insights"
 theme = "blist"
 
+# 목록 기본 페이지 크기(Hugo 기본은 10). 템플릿에서 .Paginate … 6 과 맞춤.
+paginate = 6
+
 enableRobotsTXT = true
 defaultContentLanguage = "ko"
 defaultContentLanguageInSubdir = true
@@ -85,6 +88,13 @@ disableDefaultSiteRedirect = true
 
   # Google AdSense (모든 페이지 <head>에 adsbygoogle.js 로드)
   googleAdsenseClient = "ca-pub-3365595273165799"
+
+  # AdSense 심사 등: Finance 외 카테고리 링크는 헤더 메뉴에서 숨김 + noindex + 사이트맵 제외.
+  # 승인 후 전체 복구: 아래를 false 로 바꾸거나 줄 전체 삭제.
+  financeOnlyIndexing = true
+
+  # 쿠팡 파트너스 (layouts/shortcodes/coupangLink.html — trandRadar COUPANG_AFFILIATE_ID 와 동일 권장)
+  coupangAffiliateId = "AF7891014"
 
   # Enable the darkmode toggle in header
   darkModeToggle = true

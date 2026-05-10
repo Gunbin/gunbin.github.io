@@ -1,0 +1,27 @@
+{{/*
+  coupangLink — 쿠팡 검색 제휴 링크 (TrendRadar 서버의 {{coupangLink:키워드}} 와 별개로,
+  본문에 Hugo 숏코드 형태가 들어온 경우 빌드 실패를 막기 위한 템플릿)
+
+  사용 예:
+    {{< coupangLink "무선 이어버드" />}}
+    {{< coupangLink keyword="노트북 거치대" />}}
+    {{< coupangLink >}}검색어{{< /coupangLink >}}
+*/}}
+{{- $aff := site.Params.coupangAffiliateId | default "AF7891014" -}}
+{{- $kw := "" -}}
+{{- if .IsNamedParams -}}
+  {{- $kw = .Get "keyword" | default (.Get "q") | default (.Get 0) | default "" -}}
+{{- else -}}
+  {{- $kw = .Get 0 | default "" -}}
+{{- end -}}
+{{- $kw = trim $kw " \n\r\t" -}}
+{{- if eq $kw "" -}}
+  {{- $kw = trim .Inner " \n\r\t" | plainify -}}
+{{- end -}}
+{{- if ne $kw "" -}}
+{{- $href := printf "https://www.coupang.com/np/search?%s" (querify "q" $kw "channel" "affiliate" "trackingCode" $aff) -}}
+<div class="shortcode-coupang">
+  <p><a href="{{ $href | safeURL }}" rel="nofollow sponsored noopener" target="_blank">쿠팡에서 「{{ $kw }}」 관련 상품 보기 →</a></p>
+  <p><small>이 포스팅은 쿠팡 파트너스 활동의 일환으로, 일정액의 수수료를 제공받습니다.</small></p>
+</div>
+{{- end -}}
